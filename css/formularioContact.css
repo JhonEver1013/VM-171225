@@ -1,0 +1,125 @@
+
+.titulo {
+    display: flex;
+    justify-content: center;
+    color: rgb(47, 112, 51);
+}
+
+
+/* Contenedor principal */
+.formulario {
+    display: flex; /*Usa Flexbox para organizar los contenedores en una fila */
+    justify-content: space-between; /*Distribuye los contenedores con espacio entre ellos */
+    align-items: flex-start; /* Alinea los contenedores en la parte superior */
+    gap: 20px; 
+    margin: 20px; 
+    flex-wrap: wrap; 
+    color: rgb(47, 112, 51);
+}
+
+/* Estilo para la columna del formulario */
+.inputs {
+    flex: 0 0 45%; 
+    padding: 20px; 
+    margin: 50px;
+    background-color: #f0f0f0; 
+    border-radius: 8px; 
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.445); 
+    box-sizing: border-box; 
+}
+
+/* Estilo para las etiquetas*/
+label {
+    display: block; 
+    margin-bottom: 8px; 
+    font-weight: bold; 
+}
+
+/* Estilo para los campos de entrada y área de texto */
+input, textarea {
+    width: 90%; 
+    padding: 10px; 
+    margin-bottom: 15px; 
+    border: 1px solid #ccc; 
+    border-radius: 8px; 
+    font-size: 14px; 
+}
+
+/* Estilo específico para el área de texto*/
+textarea {
+    resize: vertical; 
+}
+
+
+.send-button {
+    display: flex;
+    justify-content: center;
+}
+
+
+/*Estilo para la columna de datos de contacto */
+.datosContacto {
+    flex: 0 0 45%; 
+    padding: 20px; 
+    background-color: #fff; 
+    text-align: center; 
+    box-sizing: border-box; 
+}
+
+/*Estilo responsive para pantallas pequeñas */
+@media (max-width: 768px) {
+    .formulario {
+        flex-direction: column; 
+        align-items: center; 
+        /*width: 130%;*/
+    }
+
+    .inputs, .datosContacto {
+        flex: 0 0 80%; 
+        margin-bottom: 20px; 
+    }
+
+    .inputs {
+        order: 1; 
+        margin-bottom: 20px; 
+    }
+
+    .datosContacto {
+        order: 2; 
+    }
+}
+
+
+
+
+
+/* Iconos de redes sociales */
+.redesContacto {
+    margin: 0;
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    height: 100%; 
+}
+
+/* Iconos de redes sociales */
+.redesContacto a {
+    text-decoration: none;
+    font-size: 20px;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    color: rgb(47, 112, 51);
+    transition: all .2s ease-in-out;
+    display: inline-flex; 
+    justify-content: center; 
+    align-items: center; 
+}
+
+.redesContacto a:hover {
+    transform: scale(1.4);
+    color: #087704;
+}
+
+

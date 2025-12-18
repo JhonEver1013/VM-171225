@@ -1,0 +1,42 @@
+.cardP {
+ display: flex; /* Activa Flexbox */
+ align-items: center; /* Centra verticalmente los elementos */
+ /*border: 1px solid #ccc; /* Borde opcional para ver el contenedor */
+ padding: 10px; /* Espaciado interno */
+ flex-direction: row; /* Por defecto, los elementos están en fila */
+}
+
+.cardP img {
+ width: 500px; /* Ancho fijo para la imagen */
+ height: auto; /* Mantiene la proporción de la imagen */
+ margin-right: 20px; /* Espacio entre la imagen y el contenido */
+}
+
+.cardP a {
+  width: 40%;
+  background-color: rgb(19, 37, 1);
+  border: none;
+  
+}
+
+.card-body {
+ flex: 1; /* Hace que el card-body ocupe el espacio restante */
+}
+
+/* Estilos para pantallas pequeñas (menos de 768px) */
+@media (max-width: 768px) {
+ .cardP {
+   flex-direction: column; /* Cambia la dirección a columna */
+   text-align: center; /* Centra el texto */
+ }
+
+ .cardP img {
+   width: 80%; /* La imagen ocupa el 100% del ancho */
+   margin-right: 0; /* Elimina el margen derecho */
+   margin-bottom: 20px; /* Añade margen inferior para separar la imagen del contenido */
+ }
+
+ .card-body{
+  width: 95%;
+ }
+}

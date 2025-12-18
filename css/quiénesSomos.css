@@ -1,0 +1,91 @@
+
+.marca {
+    display: flex; 
+    flex-direction: column; /* Alinea los elementos de forma vertical */
+    gap: 20px; 
+}
+
+/* Centrar h1 y p en las columnas */
+.columna1 h1, .columna1 p, .columna2 h1, .columna2 p {
+    text-align: center; /*Centra el texto horizontalmente */
+    margin: 0 auto; /*Asegura que el elemento este centrado dentro de su contenedor*/
+    font-size: 25px;
+    color: rgb(47, 112, 51);
+}
+
+/*Para que el parrafo tenga un ancho maximo y no se extienda demasiado*/
+.columna1 p, .columna2 p {
+    max-width: 70%; 
+}
+
+.historia, .mision, .valores, .vision {
+    display: flex; 
+    justify-content: space-between; /* Distribuye las columnas equitativamente con espacio entre ellas*/
+    align-items: center; /*Alinea verticalmente las columnas al centro*/
+    gap: 20px; /* Añade un espacio de 20px entre las columnas */
+}
+
+.historia {
+    padding-top: 5%;
+}
+
+.columna1, .columna2 {
+        width: 50%; 
+}
+
+.columna1 {
+    text-align: justify; 
+}
+
+.columna1 img, .columna2 img {
+    padding-left: 20%;
+    width: 70%; 
+    height: auto; 
+    display: block; 
+}
+
+/*Último párrafo centrado*/
+.secParr p {
+    text-align: center; 
+    margin: 0 auto; 
+    font-size: 2em; 
+    font-weight: bold; 
+    padding: 10%;
+    padding-left: 30%;
+    padding-right: 30%;
+    color: rgb(47, 112, 51);
+}
+
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .historia {
+        margin-top: 10%;
+    }
+    .columna1 p, .columna2 p {
+      font-size: 18px;
+    }
+  }
+
+
+@media (max-width: 768px) {
+    .historia {
+        margin-top: 15%;
+    }
+    .columna1 p, .columna2 p {
+        font-size: 16px;
+        max-width: 90%;
+    }
+    .columna1 img, .columna2 img {
+        padding: 0px;
+        width: 90%; 
+        height: auto; 
+        display: block; 
+    }
+    .columna1 img {
+        margin-left: 10%;
+    }
+    .secParr p {
+        padding-left: 20%;
+        padding-right: 20%;
+    }
+}

@@ -1,0 +1,58 @@
+body {
+  margin: 0%;
+  padding: 0%;
+}
+
+/* Fotos y descripción de las joyas */
+.productos {
+  display: grid; 
+  grid-template-columns: repeat(3, 1fr); /* 3 columnas de igual ancho en pantallas grandes*/
+  gap: 20px; 
+  padding: 10px; 
+  box-sizing: border-box; 
+}
+.joyas {
+  text-align: center; 
+  box-sizing: border-box; 
+}
+.joyas img {
+  width: 100%; 
+  max-width: 300px; 
+  height: auto; 
+  display: block; 
+  margin: 0 auto; 
+}
+.joyas h2, .joyas h3, .joyas h4 {
+  width: 100%; 
+  max-width: 400px; 
+  margin: 5px auto; 
+  display: block; 
+}
+.joyas h2  {
+  color: rgb(148, 148, 148);
+  font-size: 20px;
+}
+.joyas h3, .joyas h4 {
+  color: rgb(161, 161, 161);
+  font-size: 15px;
+}
+/* Estilos responsivos */
+@media (max-width: 1024px) {
+  .productos {
+    grid-template-columns: repeat(2, 1fr); /*2 columnas para pantallas medianas (menos de 1024px de ancho) */
+  }
+}
+
+@media (max-width: 768px) {
+  .productos {
+    grid-template-columns: repeat(2, 1fr); /* 2 columnas para pantallas pequeñas (menos de 768px de ancho)*/
+  }
+}
+
+
+
+
+
+
+
+

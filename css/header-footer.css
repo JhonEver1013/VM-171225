@@ -1,0 +1,386 @@
+/*Fondo del toda la seccion*/
+header {    
+  margin: 0%;
+  padding: 0%;
+  background-color: rgb(0, 0, 0);
+  height: 100px;
+}
+/*lOGO*/
+.logoVM img {
+  margin: 5%;
+  padding: 5%;
+  max-height: 100px;
+}
+
+/*Dar borde-radius al cuadro de busqueda*/
+.d-flex input.form-control {
+  border-radius: 20px;
+  padding: 10px;    
+  background-color: #e2e2e2;
+  height: 35px;
+  
+}
+
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 768px) {
+  /* Centrar elementos en pantallas pequeñas */
+  .navbar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: 30px;
+    height: 70px;
+    
+  }
+
+  /* Ajustar el logo */
+  .logoVM img {
+    max-height: 40px; /* Reducir el tamaño del logo */
+  }
+
+  /* Ajustar el cuadro de búsqueda */
+  .d-flex {
+    width: 80%; /* Hacerlo más ancho en pantallas pequeñas */
+  }
+
+  /* Alinear los iconos en fila y centrarlos */
+  .icon {
+    justify-content: center;
+    gap: 15px; /* Reducir espacio entre iconos */
+    margin-top: 10px;
+  }
+
+  /* Ajustar tamaño de iconos */
+  .icon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* Ajustar botón del carrito */
+  .icon button {
+    background: none;
+    border: none;
+  }
+}
+
+
+
+
+
+
+
+/*Cuadro de búsqueda*/
+/*viene con un borde azul porque es de bootstrap,esto lo pone en negro, si se pone sin el !import el codigo priorisa a Bootstrap*/
+.form-control:focus {
+  border-radius: 50px;
+  border-color: #000000 !important; /* Cambia el color del borde */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5) !important; /* Cambia la sombra */
+  outline: none !important; /* Elimina el contorno predeterminado */   
+  
+}
+/*ajusta el ancho del Cuadro de busqueda*/
+.d-flex {
+  width: 35%;    
+}
+
+
+
+
+/*Logo y button carrito*/
+.icon button {
+  margin: 0;
+  padding: 0;
+  
+}
+form {
+  display: flex;
+  justify-content: center;
+}
+
+/*ICONOS*/
+/*Espacion entre los ICONOS*/
+.icon {
+  display: flex;  
+  gap: 20px; /* Espaciado de 20px entre iconos */
+  align-items: center; /* Alinear verticalmente */
+}
+
+/*Color de los iconos*/ 
+.iconFav, .iconProfile, .cart {
+  color: rgb(255, 248, 240);
+}
+
+/*Tamaño de ICONOS y Suaviza la animación*/
+.icon svg, .icon button {
+  transition: transform 0.2s ease-in-out;
+  width: 24px;  
+  height: 24px;  
+}
+
+/*Aumenta el tamaño de los icocnos Fav Perf y cart en un 20%*/
+.icon svg:hover {
+  transform: scale(1.2); 
+}
+  
+/*BOTONES*/
+.carrito-btn {
+  display: flex; /*elemento flexible*/
+  flex-direction: column; /*acomoda los elemento en uan columba*/
+  align-items: center; /*centra los elementos*/ 
+}
+.carrito-btn button {
+  margin: 15px;
+  width: 80%; 
+  border-radius: 20px;
+  height: 40px;
+  border: none;
+  color: #ffffff;
+  background-color: rgb(0, 0, 0);
+}
+.carrito-btn button:hover {
+  background-color: #2e2e2e;
+}
+/*Con esto nos aseguramos de que la flecha sea de color negro*/
+.btn-close {
+  filter: none !important; /* Elimina cualquier inversión de color */
+
+}
+
+
+
+
+
+
+  /*NAV horizontal*/
+ 
+  .nav-blue{
+    background-color: #000000;
+    color: white;
+    font-weight: bold;
+    font-size: 12px;
+    display: flex;
+    justify-content: space-evenly;
+    padding: 10px 10px;
+  }
+  /*efecto cursor encima*/
+  .header2 .nav-blue a:hover {
+    transform: scale(1.4);
+  }
+  .nav-blue a {
+    text-decoration: none;
+    color: white;
+  }
+
+
+
+
+
+.footer{
+    background-color: black;
+    background-image: url('img/fondoFooter.jpg');
+    background-repeat: no-repeat; /* No repetir la imagen de fondo */
+    background-position: center; /* Centra la imagen horizontalmente pero la mantiene en la parte superior verticalmente */
+    background-size: cover; /* Asegura que la imagen cubra el contenedor */   
+  }  
+  .footer p {
+    color: rgb(189, 189, 189);
+    margin: 0;
+  }
+  .footer h3 {
+    color: rgb(189, 189, 189);
+  }
+
+
+  /*Iconosde redes sociales*/ 
+ .redes{
+    margin: 0px;
+    position: relative;
+    /*bottom: 100px;*/
+    /*min-width: 700px;*/
+    display: flex;
+    justify-content: space-around;    
+  }
+  
+  /*Iconosde redes sociales*/ 
+  .redes a {
+    text-decoration: none;
+    font-size: 20px;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    color: #ffffff;    
+    box-shadow: 1px 9px 20px -5px rgba(0, 0, 0, 0.59);
+    transition: all .2s ease-in-out;
+  }
+  
+  .redes a:hover {
+    transform: scale(1.4);
+  }
+
+ /* Estilos generales para el footer */
+.footer {
+    display: flex; 
+    justify-content: space-between; 
+    padding: 20px; 
+    flex-wrap: wrap; /* Permite que las columnas se acomoden en una nueva fila si no caben en una sola fila */
+    gap: 20px; /*Añade un espacio de 20px entre las columnas*/
+    padding-top: 200px;
+}
+
+/* Estilo de cada columna */
+.footer .column1, .footer .column2, .footer .column3, .footer .column4 {
+    flex: 1; /*Hace que cada columna ocupe el mismo espacio disponible*/
+    display: flex; /*Usa flexbox dentro de cada columna para organizar sus element*/
+    flex-direction: column; 
+    align-items: center; /* Centra los elementos horizontalmente dentro de la columna */
+    text-align: center; 
+}
+
+.footer .column1{
+    margin-top: -100px;
+}
+
+.footer .column3 a {
+  color:#c0c0c0;
+  text-decoration: none;
+}
+
+/* Estilos para las imágenes */
+.footer img {
+    width: 100%;
+    height: auto; 
+    max-width: 200px; 
+    object-fit: contain; /* Asegura que la imagen se ajuste al espacio sin ser recortada */
+    margin: 0;
+}
+
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 768px) {
+    .footer {
+        flex-direction: column; /* Cambia la disposición de las columnas a una pila vertical en pantallas pequeñas*/
+        align-items: center; /* Centra las columnas de forma horizontal*/
+    }
+
+    .footer .column1, .footer .column2, .footer .column3, .footer .column4 {
+        flex: none; 
+        width: 100%; 
+        margin-bottom: 20px; 
+        text-align: center; 
+    }
+
+    /* Ajuste de la imagen para pantallas pequeñas */
+    .footer img {
+        max-width: 150px; /* Limita el tamaño de la imagen a 150px de ancho en pantallas pequeñas */
+    }
+}
+
+@media (max-width: 1024px) { 
+    .footer {
+      flex-direction: column; /* Cambia la disposición de las columnas a una pila vertical en pantallas pequeñas*/
+      align-items: center; /* Centra las columnas de forma horizontal*/
+  }
+
+  .footer .column1, .footer .column2, .footer .column3, .footer .column4 {
+      flex: none; 
+      width: 100%; 
+      margin-bottom: 20px; 
+      text-align: center; 
+  }
+
+  /* Ajuste de la imagen para pantallas pequeñas */
+  .footer img {
+      max-width: 150px; /* Limita el tamaño de la imagen a 150px de ancho en pantallas pequeñas */
+  }
+}
+
+  
+
+
+/* Forzar fondo global — pegar al final de header-footer.css */
+html, body {
+  height: 100%;
+  background-color: #f6f6f6 !important; /* color rojo que pusiste — !important para asegurar prioridad */
+  margin: 0;
+  padding: 0;
+}
+
+/* Si algún contenedor cubre el fondo con blanco, hazlo transparente */
+.main-container, .catalog-right, .catalog-container {
+  background-color: transparent !important;
+}
+
+
+
+
+
+
+
+
+
+/* --- WRAPPER QUE FIJA HEADER + NAV JUNTOS --- */
+.header-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
+  background-color: #000;
+  transition: transform 220ms ease-in-out;
+}
+
+/* Ocultar completo al hacer scroll hacia abajo */
+.header-wrapper.header--hidden {
+  transform: translateY(-120%);
+}
+
+/* Espacio para que el contenido no quede oculto */
+body {
+  padding-top: 138px !important; /* Ajusta si tu header+nav son más altos */
+}
+
+/* Como el wrapper es el fixed, el header deja de serlo */
+header.navbar {
+  position: relative !important;
+  transform: none !important;
+}
+
+/* Quitar espacios del nav-blue */
+.header2 {
+  margin: 0;
+  padding: 0;
+}
+
+/* Ajustes móviles */
+@media (max-width: 768px) {
+  body {
+    padding-top: 108px !important;
+  }
+}
+
+
+
+
+/* ===== Ajustes offcanvas específicos (pegar al final de header-footer.css) ===== */
+
+/* Forzar que el offcanvas sea blanco y esté por encima */
+.offcanvas {
+  background-color: #fff !important;   /* carrito en blanco */
+  z-index: 11000 !important;           /* por encima del header fixed (9999) */
+  opacity: 1 !important;               /* asegurar opacidad normal */
+}
+
+/* Backdrop: fondo oscuro detrás del offcanvas */
+.offcanvas-backdrop.show {
+  z-index: 10999 !important;           /* justo por debajo del offcanvas */
+  opacity: 0.55 !important;            /* oscurece solo el fondo */
+  background-color: #000 !important;
+}
+
+/* Si algún contenedor tiene transform que genere stacking context, evita problemas:
+   (esto solo aplica si tienes reglas transform en secciones; si no, no hace nada) */
+body > .offcanvas {
+  position: fixed !important;
+}
+

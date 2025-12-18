@@ -1,0 +1,75 @@
+[
+    {
+      "id": 1,
+      "nombre": "Esmeralda natural 3mm y Plata Italiana ley 925",
+      "descripcion":"Dicen que la verdadera elegancia está en lo sencillo, y esta joya nació inspirada en esos momentos cotidianos que sin darte cuenta se vuelven especiales; su diseño minimalista en plata italiana 925 abraza una esmeralda colombiana de 3 mm, pequeña pero poderosa, una chispa de luz que refleja la belleza natural de quien la lleva, perfecta para cualquier ocasión porque no busca robar miradas, sino dejar huella, discreta, pero imposible de olvidar.",
+       
+      "precio": 15.99,
+      "imagen": "json/imgprod/1.jpg"
+    },
+    {
+      "id": 2,
+      "nombre": "Anillo de Oro 18k con Diseño de Toro",
+      "descripcion":"Impactante anillo de oro 18k con un diseño detallado de toro y elementos radiales, que simbolizan fuerza y poder. Una pieza única y elegante para destacar en cualquier ocasión.", 
+      "precio": 8.50,
+      "imagen": "json/imgprod/2.jpg"
+    },
+    {
+      "id": 3,
+      "nombre": "Aretes de Esmeralda con Circones en Oro de 18K",
+      "descripcion":"Estos elegantes aretes presentan una esmeralda central rodeada por un halo de circones brillantes, montados en oro de 18 quilates. Su diseño sofisticado resalta la belleza de las piedras preciosas, brindando un toque de lujo y distinción.", 
+      "precio": 12.00,
+      "imagen": "json/imgprod/3.jpg"
+    },
+    {
+      "id": 4,
+      "nombre": "Aretes de Esmeralda y Circones en Oro de 18K",
+      "descripcion":"Destacan con una esmeralda en el centro, rodeada de circones brillantes, todo en un elegante diseño de oro de 18 quilates. Una pieza refinada que combina lujo y sofisticación.", 
+      "precio": 15.99,
+      "imagen": "json/imgprod/4.jpg"
+      },
+      {
+      "id": 5,
+      "nombre": "Cadena de Oro de 18K con Colgante de Ancla",
+      "descripcion":"Esta elegante cadena de oro de 18 quilates presenta un delicado colgante de ancla, simbolizando fuerza y estabilidad. Su diseño moderno y sofisticado la convierte en un accesorio perfecto para cualquier ocasión.", 
+      "precio": 8.50,
+      "imagen": "json/imgprod/5.jpg"
+      },
+      {
+      "id": 6,
+      "nombre": "Cadena de Oro de 18K con Colgante de Letra",
+      "descripcion":"Una cadena única en oro de 18 quilates que lleva un elegante colgante con la letra M, símbolo de personalidad y estilo. Perfecta para quienes buscan una joya que hable de su identidad con sofisticación y brillo.", 
+      "precio": 12.00,
+      "imagen": "json/imgprod/6.jpg"
+      },
+      {
+      "id": 7,
+      "nombre": "Anillo de Oro 18k con Esmeralda",
+      "descripcion":"Anillo de oro 18k con un elegante diseño cuadrado, engastado con una esmeralda genuina que realza su sofisticación. Perfecto para quienes buscan una joya atemporal y refinada", 
+      "precio": 15.99,
+      "imagen": "json/imgprod/7.jpg"
+      },
+      {
+      "id": 8,
+      "nombre": "Anillo de Oro de 18K con Esmeralda Natural y Circones",
+      "descripcion":"Este deslumbrante anillo en oro de 18 quilates cuenta con una esmeralda natural de alta calidad en su centro, rodeada por un halo de circones brillantes. Un diseño que combina lujo y elegancia, ideal para resaltar cualquier ocasión especial.", 
+      "precio": 8.50,
+      "imagen": "json/imgprod/8.jpg"
+      },
+      {
+      "id": 9,
+      "nombre": "Cadena de Oro de 18K con Colgante de Rayo Flash",
+      "descripcion":"Una cadena en oro de 18 quilates que captura la energía y velocidad del rayo, con un colgante de flash que irradia poder y estilo. Ideal para quienes buscan llevar un toque de audacia y dinamismo en su look diario.", 
+      "precio": 12.00,
+      "imagen": "json/imgprod/9.jpg"
+      },
+      {
+      "id": 10,
+      "nombre": "Cadena de Oro de 18K con Colgante de Rayo Flash",
+      "descripcion":"Una cadena en oro de 18 quilates que captura la energía y velocidad del rayo, con un colgante de flash que irradia poder y estilo. Ideal para quienes buscan llevar un toque de audacia y dinamismo en su look diario.", 
+      "precio": 12.00,
+      "imagen": "json/imgprod/10.jpg"
+      }
+      
+  ]
+  
