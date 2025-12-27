@@ -1,0 +1,81 @@
+/* css/carrito-custom.css */
+
+/* Estilo general del offcanvas para un look más limpio y elegante */
+.offcanvas-header {
+  border-bottom: 1px solid #dee2e6;
+  background-color: #f8f9fa;
+}
+
+.offcanvas-title {
+  font-weight: 600;
+  color: #343a40;
+}
+
+.offcanvas-body {
+  padding: 1.5rem;
+  background-color: #ffffff;
+}
+
+/* Estilo de cada item en el carrito */
+.cart-item {
+  border-bottom: 1px solid #e9ecef;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+}
+
+.cart-item:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.cart-item img {
+  border: 1px solid #dee2e6;
+}
+
+.cart-item strong {
+  font-size: 1.1rem;
+  color: #495057;
+}
+
+.cart-item .qty {
+  font-weight: 500;
+  min-width: 25px;
+  text-align: center;
+}
+
+/* Estilo de los botones dentro del carrito */
+.cart-item .btn {
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.cart-item .btn-danger {
+  margin-left: auto;
+}
+
+/* Estilo del subtotal y botones de acción */
+#cart-subtotal h5 {
+  font-weight: 700;
+  color: #212529;
+}
+
+.offcanvas-body .d-flex.gap-2 {
+  border-top: 1px solid #dee2e6;
+  padding-top: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.offcanvas-body .btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+  transition: background-color 0.2s;
+}
+
+.offcanvas-body .btn-primary:hover {
+  background-color: #0056b3;
+}
