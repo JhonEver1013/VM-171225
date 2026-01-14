@@ -1,0 +1,57 @@
+/* css/favoritos-custom.css */
+
+/* Estilo para los botones de favoritos en las tarjetas de producto */
+.product-buttons {
+  display: flex;
+  gap: 8px; /* Espacio entre los botones */
+}
+
+.btn-add-fav {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s, color 0.2s;
+  color: #6c757d;
+}
+
+.btn-add-fav:hover {
+  background-color: #e9ecef;
+  color: #dc3545;
+}
+
+/* Estilo para el botón cuando un producto es un favorito (activo) */
+.btn-add-fav.active {
+  background-color: #dc3545;
+  color: #fff;
+  border-color: #dc3545;
+}
+
+.btn-add-fav.active svg {
+  fill: #fff;
+}
+
+/* Estilos para el offcanvas de favoritos, similares al carrito */
+.fav-item {
+  border-bottom: 1px solid #e9ecef;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+}
+
+.fav-item:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.fav-item strong {
+  font-size: 1.1rem;
+  color: #495057;
+}
+
+.fav-item .btn-remove-fav {
+  border-radius: 6px;
+}
