@@ -8,8 +8,8 @@ async function cargarProductos() {
   catalogoContainers.forEach(container => {
     container.innerHTML = '';
     productos.forEach(producto => {
-      const productoHTML = ` 
-  <div class="producto"> 
+      const productoHTML = `
+  <div class="producto">
     <a href="detalle.html?id=${producto.id}">
       <img src="${producto.imagen}" alt="${producto.nombre}">
       <h3>${producto.nombre}</h3>
@@ -31,6 +31,9 @@ async function cargarProductos() {
       container.innerHTML += productoHTML;
     });
   });
+
+  // Disparar un evento personalizado cuando los productos se hayan cargado
+  document.dispatchEvent(new CustomEvent('productosCargados'));
 }
 
 document.addEventListener('DOMContentLoaded', cargarProductos);

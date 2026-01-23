@@ -18,15 +18,13 @@ class specialHeader extends HTMLElement {
           </form>
 
           <div class="icon">
-            <!-- Ícono de favoritos (botón que abre offcanvas) -->
-            <button id="fav-button" class="navbar-toggler position-relative" type="button"
-                    data-bs-toggle="offcanvas" data-bs-target="#offcanvasFavoritesNavbar"
-                    aria-controls="offcanvasFavoritesNavbar" aria-label="Favoritos">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="iconFav" viewBox="0 0 16 16">
-                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01z"/>
-              </svg>
-              <span id="fav-badge"
-                    style="display:none; position:absolute; top:-6px; right:-6px; background:#dc3545; color:white; border-radius:50%; padding:2px 6px; font-size:12px;">0</span>
+            <!-- Botón de Favoritos -->
+            <button id="ver-favoritos-btn" class="navbar-toggler" type="button"
+                    data-bs-toggle="offcanvas" data-bs-target="#offcanvasFavoritos"
+                    aria-controls="offcanvasFavoritos" aria-label="Favoritos">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="iconFav" viewBox="0 0 16 16">
+                    <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01z"/>
+                </svg>
             </button>
 
             <!-- icono perfil (SVG) -->
@@ -70,17 +68,13 @@ class specialHeader extends HTMLElement {
       </div>
 
       <!-- OFFCANVAS (MENÚ FAVORITOS) -->
-      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasFavoritesNavbar" aria-labelledby="offcanvasFavoritesNavbarLabel">
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasFavoritos" aria-labelledby="offcanvasFavoritosLabel">
         <div class="offcanvas-header">
-          <h3 id="offcanvasFavoritesNavbarLabel">Mis Favoritos</h3>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+          <h3 id="offcanvasFavoritosLabel">Mis Favoritos</h3>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
         </div>
-
         <div class="offcanvas-body">
-          <div id="fav-items-list" class="mb-3"><!-- favoritos.js renderiza aquí --></div>
-          <div class="mt-3 d-flex gap-2">
-            <button id="fav-clear-btn" class="btn btn-outline-danger">Vaciar favoritos</button>
-          </div>
+          <div id="favoritos-items-container"></div>
         </div>
       </div>
 
@@ -100,11 +94,11 @@ class specialHeader extends HTMLElement {
     /* --- MOVEMOS EL OFFCANVAS AL <body> PARA EVITAR PROBLEMAS DE STACKING --- */
     // Ejecutar con setTimeout(,0) para asegurarnos de que el DOM interno exista.
     setTimeout(() => {
-      this.querySelectorAll('.offcanvas').forEach(off => {
-        if (off && off.parentElement !== document.body) {
-          document.body.appendChild(off);
-        }
-      });
+      const off = this.querySelector('#offcanvasDarkNavbar');
+      if (off && off.parentElement !== document.body) {
+        document.body.appendChild(off);
+        // console.log('Offcanvas movido al body');
+      }
     }, 0);
   }
 }

@@ -1,5 +1,5 @@
 /*Fondo del toda la seccion*/
-header {    
+header {
   margin: 0%;
   padding: 0%;
   background-color: rgb(0, 0, 0);
@@ -15,10 +15,10 @@ header {
 /*Dar borde-radius al cuadro de busqueda*/
 .d-flex input.form-control {
   border-radius: 20px;
-  padding: 10px;    
+  padding: 10px;
   background-color: #e2e2e2;
   height: 35px;
-  
+
 }
 
 /* Ajustes para pantallas pequeñas */
@@ -31,7 +31,7 @@ header {
     justify-content: center;
     padding-top: 30px;
     height: 70px;
-    
+
   }
 
   /* Ajustar el logo */
@@ -76,12 +76,12 @@ header {
   border-radius: 50px;
   border-color: #000000 !important; /* Cambia el color del borde */
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.5) !important; /* Cambia la sombra */
-  outline: none !important; /* Elimina el contorno predeterminado */   
-  
+  outline: none !important; /* Elimina el contorno predeterminado */
+
 }
 /*ajusta el ancho del Cuadro de busqueda*/
 .d-flex {
-  width: 35%;    
+  width: 35%;
 }
 
 
@@ -91,7 +91,7 @@ header {
 .icon button {
   margin: 0;
   padding: 0;
-  
+
 }
 form {
   display: flex;
@@ -101,12 +101,12 @@ form {
 /*ICONOS*/
 /*Espacion entre los ICONOS*/
 .icon {
-  display: flex;  
+  display: flex;
   gap: 20px; /* Espaciado de 20px entre iconos */
   align-items: center; /* Alinear verticalmente */
 }
 
-/*Color de los iconos*/ 
+/*Color de los iconos*/
 .iconFav, .iconProfile, .cart {
   color: rgb(255, 248, 240);
 }
@@ -114,24 +114,24 @@ form {
 /*Tamaño de ICONOS y Suaviza la animación*/
 .icon svg, .icon button {
   transition: transform 0.2s ease-in-out;
-  width: 24px;  
-  height: 24px;  
+  width: 24px;
+  height: 24px;
 }
 
 /*Aumenta el tamaño de los icocnos Fav Perf y cart en un 20%*/
 .icon svg:hover {
-  transform: scale(1.2); 
+  transform: scale(1.2);
 }
-  
+
 /*BOTONES*/
 .carrito-btn {
   display: flex; /*elemento flexible*/
   flex-direction: column; /*acomoda los elemento en uan columba*/
-  align-items: center; /*centra los elementos*/ 
+  align-items: center; /*centra los elementos*/
 }
 .carrito-btn button {
   margin: 15px;
-  width: 80%; 
+  width: 80%;
   border-radius: 20px;
   height: 40px;
   border: none;
@@ -153,7 +153,7 @@ form {
 
 
   /*NAV horizontal*/
- 
+
   .nav-blue{
     background-color: #000000;
     color: white;
@@ -181,8 +181,8 @@ form {
     background-image: url('img/fondoFooter.jpg');
     background-repeat: no-repeat; /* No repetir la imagen de fondo */
     background-position: center; /* Centra la imagen horizontalmente pero la mantiene en la parte superior verticalmente */
-    background-size: cover; /* Asegura que la imagen cubra el contenedor */   
-  }  
+    background-size: cover; /* Asegura que la imagen cubra el contenedor */
+  }
   .footer p {
     color: rgb(189, 189, 189);
     margin: 0;
@@ -192,17 +192,17 @@ form {
   }
 
 
-  /*Iconosde redes sociales*/ 
+  /*Iconosde redes sociales*/
  .redes{
     margin: 0px;
     position: relative;
     /*bottom: 100px;*/
     /*min-width: 700px;*/
     display: flex;
-    justify-content: space-around;    
+    justify-content: space-around;
   }
-  
-  /*Iconosde redes sociales*/ 
+
+  /*Iconosde redes sociales*/
   .redes a {
     text-decoration: none;
     font-size: 20px;
@@ -210,20 +210,20 @@ form {
     height: 60px;
     line-height: 60px;
     text-align: center;
-    color: #ffffff;    
+    color: #ffffff;
     box-shadow: 1px 9px 20px -5px rgba(0, 0, 0, 0.59);
     transition: all .2s ease-in-out;
   }
-  
+
   .redes a:hover {
     transform: scale(1.4);
   }
 
  /* Estilos generales para el footer */
 .footer {
-    display: flex; 
-    justify-content: space-between; 
-    padding: 20px; 
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
     flex-wrap: wrap; /* Permite que las columnas se acomoden en una nueva fila si no caben en una sola fila */
     gap: 20px; /*Añade un espacio de 20px entre las columnas*/
     padding-top: 200px;
@@ -233,9 +233,9 @@ form {
 .footer .column1, .footer .column2, .footer .column3, .footer .column4 {
     flex: 1; /*Hace que cada columna ocupe el mismo espacio disponible*/
     display: flex; /*Usa flexbox dentro de cada columna para organizar sus element*/
-    flex-direction: column; 
+    flex-direction: column;
     align-items: center; /* Centra los elementos horizontalmente dentro de la columna */
-    text-align: center; 
+    text-align: center;
 }
 
 .footer .column1{
@@ -250,8 +250,8 @@ form {
 /* Estilos para las imágenes */
 .footer img {
     width: 100%;
-    height: auto; 
-    max-width: 200px; 
+    height: auto;
+    max-width: 200px;
     object-fit: contain; /* Asegura que la imagen se ajuste al espacio sin ser recortada */
     margin: 0;
 }
@@ -264,10 +264,10 @@ form {
     }
 
     .footer .column1, .footer .column2, .footer .column3, .footer .column4 {
-        flex: none; 
-        width: 100%; 
-        margin-bottom: 20px; 
-        text-align: center; 
+        flex: none;
+        width: 100%;
+        margin-bottom: 20px;
+        text-align: center;
     }
 
     /* Ajuste de la imagen para pantallas pequeñas */
@@ -276,17 +276,17 @@ form {
     }
 }
 
-@media (max-width: 1024px) { 
+@media (max-width: 1024px) {
     .footer {
       flex-direction: column; /* Cambia la disposición de las columnas a una pila vertical en pantallas pequeñas*/
       align-items: center; /* Centra las columnas de forma horizontal*/
   }
 
   .footer .column1, .footer .column2, .footer .column3, .footer .column4 {
-      flex: none; 
-      width: 100%; 
-      margin-bottom: 20px; 
-      text-align: center; 
+      flex: none;
+      width: 100%;
+      margin-bottom: 20px;
+      text-align: center;
   }
 
   /* Ajuste de la imagen para pantallas pequeñas */
@@ -295,7 +295,7 @@ form {
   }
 }
 
-  
+
 
 
 /* Forzar fondo global — pegar al final de header-footer.css */
@@ -327,12 +327,12 @@ html, body {
   width: 100%;
   z-index: 9999;
   background-color: #000;
-  transition: transform 220ms ease-in-out;
+  transition: top 220ms ease-in-out;
 }
 
 /* Ocultar completo al hacer scroll hacia abajo */
 .header-wrapper.header--hidden {
-  transform: translateY(-120%);
+  top: -100%;
 }
 
 /* Espacio para que el contenido no quede oculto */
@@ -383,4 +383,3 @@ header.navbar {
 body > .offcanvas {
   position: fixed !important;
 }
-

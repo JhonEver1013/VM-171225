@@ -52,11 +52,21 @@
   align-items: center;
   justify-content: center;
   padding: 0;
+  line-height: 1; /* Para centrar el texto verticalmente */
 }
 
+/* Botón de eliminar (ahora negro) */
 .cart-item .btn-danger {
   margin-left: auto;
+  background-color: #000;
+  border-color: #000;
+  color: #fff;
 }
+.cart-item .btn-danger:hover {
+  background-color: #333;
+  border-color: #333;
+}
+
 
 /* Estilo del subtotal y botones de acción */
 #cart-subtotal h5 {
@@ -70,6 +80,7 @@
   margin-top: 1.5rem;
 }
 
+/* Botón de "Pagar pedido" */
 .offcanvas-body .btn-primary {
   background-color: #007bff;
   border-color: #007bff;
@@ -78,4 +89,15 @@
 
 .offcanvas-body .btn-primary:hover {
   background-color: #0056b3;
+}
+
+/* Botón de "Vaciar carrito" (ahora negro) */
+.offcanvas-body .btn-outline-danger {
+  background-color: #000;
+  border-color: #000;
+  color: #fff;
+}
+.offcanvas-body .btn-outline-danger:hover {
+  background-color: #333;
+  border-color: #333;
 }

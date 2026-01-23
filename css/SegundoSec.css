@@ -1,48 +1,48 @@
 /*gIF esme oro banner*/
 .Publicidad {
     position: relative;
-    background-image: url('img/bannergifesmeoro.gif'); 
+    background-image: url('img/bannergifesmeoro.gif');
 
-    background-size: contain;  
-    background-position: center;  
-    background-repeat: no-repeat;  
-    height: 600px; 
-    padding: 0;  
-    width: 100%; 
-    margin: 0; 
-    
-    /*border: 2px solid #000; /* Línea de 2px alrededor del elemento */     
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 600px;
+    padding: 0;
+    width: 100%;
+    margin: 0;
+
+    /*border: 2px solid #000; /* Línea de 2px alrededor del elemento */
 }
-/*Estohace que el contenedor se ajuste al tamaño del Gif*/ 
+/*Estohace que el contenedor se ajuste al tamaño del Gif*/
 @media (max-width: 768px) {
   .Publicidad {
-      height: 30vh; 
+      height: 30vh;
   }
 }
-  
-    
+
+
 
  /*texto San valentin*/
   .textSanV {
-    font-family: 'Perpetua Titling MT', serif; 
-    text-align: center; 
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    height: 120vh; 
-    width: 100%; 
-    color: #808080; 
-    
+    font-family: 'Perpetua Titling MT', serif;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 120vh;
+    width: 100%;
+    color: #808080;
+
     /*Fondo*/
-    background-image: url('img/sanValentinFondo.jpg'); 
+    background-image: url('img/sanValentinFondo.jpg');
     background-size: cover; /*Asegura que la imagen cubra todo el contenedor*/
-    background-position: center center; 
-    background-repeat: no-repeat; 
+    background-position: center center;
+    background-repeat: no-repeat;
    }
 .textSanV h1 {
-    font-size: 1.5em; 
-    line-height: 1.5; 
-    margin: 20%; 
+    font-size: 1.5em;
+    line-height: 1.5;
+    margin: 20%;
 }
 /*moviles*/
 @media (max-width: 768px) {
@@ -53,7 +53,7 @@
 }
 
 
-    
+
  /*carrucel de fotos modelos traslado infinito*/
   .topVentas {
     display: flex;
@@ -64,29 +64,22 @@
 }
 .topVentasInner {
     display: flex;
-    animation: scroll 20s linear infinite;
-    width: calc(200px * 11 * 2 + 10px * 11); 
+    animation: scroll var(--scroll-duration, 20s) linear infinite;
+    width: calc(200px * 11 * 2 + 10px * 11);
 }
 .modelosfot {
-  flex: 0 0 auto; 
-  width: 50vh; 
-  margin-right: 10px; 
+  flex: 0 0 auto;
+  width: 50vh;
+  margin-right: 10px;
 }
 .modelosfot img {
   width: 80%; /* Imagen ocupa el 100% del ancho del contenedor */
-  height: auto; 
+  height: auto;
   display: block; /* Elimina los espacios en blanco debajo de la imagen */
-  border-radius: 25px; 
+  border-radius: 25px;
 }
 /* Animación de scroll infinito */
 @keyframes scroll {
     0% { transform: translateX(0); }
-    100% { transform: translateX(-30%); }
+    100% { transform: translateX(-50%); }
 }
-
-
-
-
-
-
-  

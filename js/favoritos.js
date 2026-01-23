@@ -1,155 +1,97 @@
-/* js/favoritos.js - Lógica para la sección de favoritos */
-const FAV_KEY = "verdemont_favoritos";
 
-/* ---------- Utilidades de almacenamiento ---------- */
-function leerFavoritos() {
-  return JSON.parse(localStorage.getItem(FAV_KEY)) || [];
+// js/favoritos.js
+
+// Función para obtener los favoritos desde localStorage
+function obtenerFavoritos() {
+  const favoritos = localStorage.getItem('favoritos');
+  return favoritos ? JSON.parse(favoritos) : [];
 }
 
+// Función para guardar los favoritos en localStorage
 function guardarFavoritos(favoritos) {
-  localStorage.setItem(FAV_KEY, JSON.stringify(favoritos));
-  actualizarBadgeFavoritos();
-  renderFavoritosOffcanvas();
+  localStorage.setItem('favoritos', JSON.stringify(favoritos));
 }
 
-/* ---------- Agregar / Eliminar favoritos ---------- */
-async function agregarProductoAFavoritos(idOrProducto) {
-  try {
-    let producto;
-    if (typeof idOrProducto === 'object') {
-      producto = idOrProducto;
+// Función para verificar si un producto está en favoritos
+function esFavorito(productoId) {
+  const favoritos = obtenerFavoritos();
+  return favoritos.includes(productoId);
+}
+
+// Función para agregar o quitar un producto de favoritos
+function agregarProductoAFavoritos(productoId) {
+  let favoritos = obtenerFavoritos();
+  if (esFavorito(productoId)) {
+    favoritos = favoritos.filter(id => id !== productoId);
+  } else {
+    favoritos.push(productoId);
+  }
+  guardarFavoritos(favoritos);
+  actualizarIconosFavoritos();
+  cargarFavoritosEnOffcanvas(); // Asegúrate de que el offcanvas se actualice
+}
+
+// Función para actualizar los íconos de corazón en toda la página
+function actualizarIconosFavoritos() {
+  const botonesFavoritos = document.querySelectorAll('.btn-add-fav');
+  botonesFavoritos.forEach(boton => {
+    const productoId = boton.getAttribute('onclick').match(/'(.*?)'/)[1];
+    if (esFavorito(productoId)) {
+      boton.classList.add('active');
     } else {
-      const idStr = String(idOrProducto);
-      const resp = await fetch('json/productos.json');
-      if (!resp.ok) throw new Error('No se pudo cargar productos.json');
-      const productos = await resp.json();
-      producto = productos.find(p => String(p.id) === idStr);
-      if (!producto) {
-        console.error('Producto no encontrado para id', idOrProducto);
-        return;
-      }
+      boton.classList.remove('active');
     }
-
-    const favoritos = leerFavoritos();
-    const idStr = String(producto.id);
-    if (!favoritos.find(p => String(p.id) === idStr)) {
-      favoritos.push(producto);
-      guardarFavoritos(favoritos);
-    }
-
-    // Feedback visual en el botón de favoritos
-    const selector = `.btn-add-fav[onclick*="${producto.id}"]`;
-    const btn = document.querySelector(selector);
-    if (btn) {
-      btn.classList.add('active'); // Estilo visual para 'favorito'
-    }
-  } catch (err) {
-    console.error('Error al agregar a favoritos:', err);
-  }
-}
-
-function quitarProductoDeFavoritos(productId) {
-  const idStr = String(productId);
-  const nuevosFavoritos = leerFavoritos().filter(p => String(p.id) !== idStr);
-  guardarFavoritos(nuevosFavoritos);
-
-  // Actualizar feedback visual
-  const selector = `.btn-add-fav[onclick*="${productId}"]`;
-  const btn = document.querySelector(selector);
-  if (btn) {
-    btn.classList.remove('active');
-  }
-}
-
-function vaciarFavoritos() {
-  guardarFavoritos([]);
-  // Actualizar todos los botones
-  document.querySelectorAll('.btn-add-fav.active').forEach(btn => {
-    btn.classList.remove('active');
   });
 }
 
-/* ---------- Badge / Render ---------- */
-function actualizarBadgeFavoritos() {
-  const total = leerFavoritos().length;
-  const badge = document.getElementById('fav-badge');
-  if (!badge) return;
-  badge.textContent = total;
-  badge.style.display = total > 0 ? 'inline-block' : 'none';
-}
+// Función para cargar los productos favoritos en el offcanvas
+async function cargarFavoritosEnOffcanvas() {
+  const favoritosContainer = document.getElementById('favoritos-items-container');
+  if (!favoritosContainer) return;
 
-function renderFavoritosOffcanvas() {
-  const listaCont = document.getElementById('fav-items-list');
-  if (!listaCont) return;
-  const favoritos = leerFavoritos();
+  const favoritos = obtenerFavoritos();
+  const respuesta = await fetch('json/productos.json');
+  const productos = await respuesta.json();
+
+  favoritosContainer.innerHTML = '';
+
   if (favoritos.length === 0) {
-    listaCont.innerHTML = '<p class="text-center">Aún no tienes favoritos.</p>';
+    favoritosContainer.innerHTML = '<p>No tienes productos favoritos.</p>';
     return;
   }
-  listaCont.innerHTML = '';
-  favoritos.forEach(item => {
-    const itemEl = document.createElement('div');
-    itemEl.className = 'fav-item d-flex align-items-center mb-3';
-    itemEl.innerHTML = `
-      <img src="${item.imagen || ''}" alt="${item.nombre}" style="width:64px;height:64px;object-fit:cover;border-radius:6px;margin-right:10px;">
-      <div style="flex:1;">
-        <div><strong>${item.nombre}</strong></div>
-        <div>$${(item.precio).toFixed(2)}</div>
+
+  const productosFavoritos = productos.filter(p => favoritos.includes(p.id));
+
+  productosFavoritos.forEach(producto => {
+    const favItem = document.createElement('div');
+    favItem.className = 'fav-item d-flex justify-content-between align-items-center mb-3';
+    favItem.innerHTML = `
+      <div class="d-flex align-items-center">
+        <img src="${producto.imagen}" alt="${producto.nombre}" style="width: 60px; height: 60px; object-fit: cover; margin-right: 15px;">
+        <div>
+          <strong>${producto.nombre}</strong>
+          <p class="mb-0">$${producto.precio.toFixed(2)}</p>
+        </div>
       </div>
-      <button type="button" class="btn btn-sm btn-danger ms-3 btn-remove-fav" data-id="${String(item.id)}">Eliminar</button>
+      <button class="btn btn-sm btn-outline-danger btn-remove-fav" onclick="agregarProductoAFavoritos('${producto.id}')">Eliminar</button>
     `;
-    listaCont.appendChild(itemEl);
+    favoritosContainer.appendChild(favItem);
   });
 }
 
-/* ---------- Delegación de eventos ---------- */
-function favListClickHandler(e) {
-  const target = e.target;
-  if (target.closest('.btn-remove-fav')) {
-    const id = target.closest('.btn-remove-fav').dataset.id;
-    if (!id) return;
-    quitarProductoDeFavoritos(id);
-  }
-}
+// Event listener para el evento personalizado 'productosCargados'
+document.addEventListener('productosCargados', () => {
+  actualizarIconosFavoritos();
 
-function setupFavListDelegation() {
-  const listaCont = document.getElementById('fav-items-list');
-  if (listaCont) {
-    listaCont.removeEventListener('click', favListClickHandler);
-    listaCont.addEventListener('click', favListClickHandler);
-  }
-}
-
-/* ---------- Controles del offcanvas ---------- */
-function setupOffcanvasFavControls() {
-  const btnVaciar = document.getElementById('fav-clear-btn');
-  if (btnVaciar) {
-    btnVaciar.addEventListener('click', () => {
-      if (confirm('¿Deseas vaciar tu lista de favoritos?')) vaciarFavoritos();
-    });
-  }
-}
-
-/* ---------- Inicialización ---------- */
-document.addEventListener('DOMContentLoaded', () => {
-  setTimeout(() => {
-    actualizarBadgeFavoritos();
-    renderFavoritosOffcanvas();
-    setupFavListDelegation();
-    setupOffcanvasFavControls();
-
-    // Sincronizar estado visual de los botones de favoritos
-    const favoritos = leerFavoritos();
-    favoritos.forEach(fav => {
-      const selector = `.btn-add-fav[onclick*="'${fav.id}'"]`;
-      document.querySelectorAll(selector).forEach(btn => {
-        btn.classList.add('active');
-      });
-    });
-  }, 100);
+  // Es posible que los productos se carguen dinámicamente, así que usamos un MutationObserver
+  const observer = new MutationObserver(actualizarIconosFavoritos);
+  const catalogoContainers = document.querySelectorAll('.catalog-container');
+  catalogoContainers.forEach(container => {
+    observer.observe(container, { childList: true, subtree: true });
+  });
 });
 
-/* ---------- Exponer funciones globalmente ---------- */
-window.agregarProductoAFavoritos = agregarProductoAFavoritos;
-window.quitarProductoDeFavoritos = quitarProductoDeFavoritos;
-window.vaciarFavoritos = vaciarFavoritos;
+// Cargar favoritos en el offcanvas al cargar la página
+document.addEventListener('DOMContentLoaded', () => {
+  cargarFavoritosEnOffcanvas();
+});
