@@ -64,7 +64,6 @@
 }
 .topVentasInner {
     display: flex;
-    animation: scroll var(--scroll-duration, 20s) linear infinite;
     width: calc(200px * 11 * 2 + 10px * 11);
 }
 .modelosfot {
@@ -81,5 +80,11 @@
 /* Animación de scroll infinito */
 @keyframes scroll {
     0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+    100% { transform: translateX(-30%); }
 }
+
+
+
+
+
+

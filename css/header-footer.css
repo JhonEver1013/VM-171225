@@ -327,12 +327,12 @@ html, body {
   width: 100%;
   z-index: 9999;
   background-color: #000;
-  transition: top 220ms ease-in-out;
+  transition: transform 220ms ease-in-out;
 }
 
 /* Ocultar completo al hacer scroll hacia abajo */
 .header-wrapper.header--hidden {
-  top: -100%;
+  transform: translateY(-120%);
 }
 
 /* Espacio para que el contenido no quede oculto */
