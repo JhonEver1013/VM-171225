@@ -64,7 +64,8 @@
 }
 .topVentasInner {
     display: flex;
-    width: calc(200px * 11 * 2 + 10px * 11);
+    width: calc(50vh * 22 + 10px * 22); /* Recalculate width for seamless scroll */
+    animation: scroll 80s linear infinite; /* Restore and slow down animation */
 }
 .modelosfot {
   flex: 0 0 auto;
@@ -80,7 +81,7 @@
 /* Animación de scroll infinito */
 @keyframes scroll {
     0% { transform: translateX(0); }
-    100% { transform: translateX(-30%); }
+    100% { transform: translateX(-50%); } /* Translate by half the width for a perfect loop */
 }
 
 

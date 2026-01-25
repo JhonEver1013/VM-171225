@@ -161,15 +161,18 @@ form {
     font-size: 12px;
     display: flex;
     justify-content: space-evenly;
-    padding: 10px 10px;
+    align-items: center; /* Center items vertically */
+    padding: 0 10px; /* Adjust padding */
   }
   /*efecto cursor encima*/
   .header2 .nav-blue a:hover {
-    transform: scale(1.4);
+    transform: scale(1.2); /* Slightly reduce the hover effect */
   }
   .nav-blue a {
     text-decoration: none;
     color: white;
+    padding: 10px 15px; /* Add padding for a larger hover area */
+    transition: transform 0.2s ease-in-out; /* Add transition for smoothness */
   }
 
 

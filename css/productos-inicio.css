@@ -185,9 +185,13 @@ text-decoration: none;
   transition: all 0.25s ease-in-out;
 }
 
+.btn-add-fav.active {
+  color: red; /* Makes the filled heart icon red */
+}
+
 /* Hover (solo PC) */
 @media (hover: hover) and (pointer: fine) {
-  .btn-add-cart:hover {
+  .btn-add-cart:hover, .btn-add-fav:hover {
     background-color: #222;
     transform: scale(1.03);
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
