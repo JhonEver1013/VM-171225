@@ -1,68 +1,80 @@
+/* js/modeling-set.js - Lógica para el slider de fotografías */
 
 document.addEventListener('DOMContentLoaded', () => {
-    const track = document.querySelector('.camera-track');
-    const slides = Array.from(track.children);
-    const nextButton = document.querySelector('.cam-btn.next');
-    const prevButton = document.querySelector('.cam-btn.prev');
-    const shutterBtn = document.querySelector('.shutter-btn');
+    const track = document.querySelector('.photo-track');
+    const slides = Array.from(document.querySelectorAll('.photo-slide'));
+    const nextBtn = document.querySelector('.mod-btn.next');
+    const prevBtn = document.querySelector('.mod-btn.prev');
+
+    if (!track || slides.length === 0) return;
 
     let currentIndex = 0;
+    let autoSlideInterval;
 
-    const updateSlider = () => {
-        const slideWidth = slides[0].getBoundingClientRect().width;
-        track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
-
-        // Update active class
+    /**
+     * Actualiza la posición del track para mostrar el slide actual.
+     */
+    function updateSlider() {
+        track.style.transform = `translateX(-${currentIndex * 100}%)`;
         slides.forEach((slide, index) => {
-            if (index === currentIndex) {
-                slide.classList.add('active');
-            } else {
-                slide.classList.remove('active');
-            }
+            slide.classList.toggle('active', index === currentIndex);
         });
-    };
+    }
 
-    const nextSlide = () => {
+    /**
+     * Avanza al siguiente slide.
+     */
+    function nextSlide() {
         currentIndex = (currentIndex + 1) % slides.length;
         updateSlider();
-    };
+    }
 
-    const prevSlide = () => {
+    /**
+     * Retrocede al slide anterior.
+     */
+    function prevSlide() {
         currentIndex = (currentIndex - 1 + slides.length) % slides.length;
         updateSlider();
-    };
+    }
 
-    nextButton.addEventListener('click', nextSlide);
-    prevButton.addEventListener('click', prevSlide);
+    /**
+     * Inicia el desplazamiento automático.
+     */
+    function startAutoSlide() {
+        stopAutoSlide();
+        autoSlideInterval = setInterval(nextSlide, 4500);
+    }
 
-    shutterBtn.addEventListener('click', () => {
-        // Flash effect
-        const viewfinder = document.querySelector('.camera-viewfinder');
-        viewfinder.style.transition = 'none';
-        viewfinder.style.backgroundColor = '#fff';
+    /**
+     * Detiene el desplazamiento automático.
+     */
+    function stopAutoSlide() {
+        if (autoSlideInterval) clearInterval(autoSlideInterval);
+    }
 
-        setTimeout(() => {
-            viewfinder.style.transition = 'background-color 0.5s';
-            viewfinder.style.backgroundColor = '#000';
+    // Eventos de botones
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
             nextSlide();
-        }, 50);
-    });
+            startAutoSlide(); // Reiniciar el timer al interactuar
+        });
+    }
 
-    // Auto play
-    let autoPlay = setInterval(nextSlide, 5000);
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            prevSlide();
+            startAutoSlide(); // Reiniciar el timer al interactuar
+        });
+    }
 
-    const resetAutoPlay = () => {
-        clearInterval(autoPlay);
-        autoPlay = setInterval(nextSlide, 5000);
-    };
+    // Pausar auto-slide cuando el usuario interactúa con la imagen
+    const photoContainer = document.querySelector('.photo-container');
+    if (photoContainer) {
+        photoContainer.addEventListener('mouseenter', stopAutoSlide);
+        photoContainer.addEventListener('mouseleave', startAutoSlide);
+    }
 
-    [nextButton, prevButton, shutterBtn].forEach(btn => {
-        btn.addEventListener('click', resetAutoPlay);
-    });
-
-    // Handle resize
-    window.addEventListener('resize', updateSlider);
-
-    // Initial state
+    // Inicializar
+    startAutoSlide();
     updateSlider();
 });

@@ -5,7 +5,7 @@ const detalleContainer = document.getElementById('detalle-producto');
 
 async function cargarDetalleProducto() {
   try {
-    const respuesta = await fetch('../json/productos.json');
+    const respuesta = await fetch('json/productos.json');
     if (!respuesta.ok) throw new Error('No se pudo cargar el archivo JSON');
     const productos = await respuesta.json();
     const producto = productos.find(p => p.id == idProducto);
