@@ -1,6 +1,28 @@
 /* js/carrito.js - Carrito unificado usando clave verdemont_carrito */
 const CART_KEY = "verdemont_carrito";
 
+/**
+ * Inyecta dinámicamente los scripts necesarios para generar el PDF (jsPDF y autoTable).
+ */
+async function cargarDependenciasPDF() {
+  const scripts = [
+    'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js',
+    'https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js'
+  ];
+
+  for (const src of scripts) {
+    if (!document.querySelector(`script[src="${src}"]`)) {
+      await new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = src;
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.appendChild(script);
+      });
+    }
+  }
+}
+
 /* ---------- utilidades de almacenamiento ---------- */
 function leerCarrito() {
   return JSON.parse(localStorage.getItem(CART_KEY)) || [];
@@ -78,6 +100,130 @@ function cambiarCantidad(productId, nuevaCantidad) {
 }
 function vaciarCarrito() {
   guardarCarrito([]);
+}
+
+/**
+ * Lógica principal para finalizar el pedido: genera PDF y redirige a WhatsApp.
+ */
+async function finalizarPedido() {
+  const carrito = leerCarrito();
+  if (carrito.length === 0) return;
+
+  const subtotal = getSubtotal();
+
+  try {
+    // Asegurar que las dependencias de PDF estén cargadas
+    await cargarDependenciasPDF();
+
+    // Generar y descargar el PDF
+    await generarPDF(carrito, subtotal);
+
+    // Redirigir a WhatsApp
+    enviarWhatsApp(carrito, subtotal);
+  } catch (error) {
+    console.error('Error al finalizar el pedido:', error);
+    alert('Hubo un error al procesar tu pedido. Por favor intenta de nuevo.');
+  }
+}
+
+/**
+ * Genera un PDF profesional con el resumen del pedido.
+ */
+async function generarPDF(carrito, subtotal) {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  // 1. Logo de VerdeMont (Centrado en la parte superior)
+  try {
+    const logoUrl = 'img/LogoVerdeMont.png';
+    const imgData = await getImageDataURL(logoUrl);
+    // Centrar imagen: ancho página es 210mm. Si el logo mide 40mm de ancho: (210-40)/2 = 85
+    doc.addImage(imgData, 'PNG', 85, 10, 40, 40);
+  } catch (e) {
+    console.warn('No se pudo cargar el logo para el PDF', e);
+  }
+
+  // 2. Título y encabezado
+  doc.setFontSize(22);
+  doc.setTextColor(34, 139, 34); // Un tono verde elegante
+  doc.text("Resumen de Pedido", 105, 60, { align: "center" });
+
+  doc.setFontSize(12);
+  doc.setTextColor(100);
+  const fecha = new Date().toLocaleDateString();
+  doc.text(`Fecha: ${fecha}`, 105, 68, { align: "center" });
+
+  // 3. Tabla de productos
+  const columns = ["Producto", "Cant.", "Precio Unit.", "Total"];
+  const rows = carrito.map(item => [
+    item.nombre,
+    item.cantidad,
+    `$${item.precio.toLocaleString()}`,
+    `$${(item.precio * item.cantidad).toLocaleString()}`
+  ]);
+
+  doc.autoTable({
+    startY: 75,
+    head: [columns],
+    body: rows,
+    theme: 'striped',
+    headStyles: { fillStyle: [34, 139, 34], textColor: 255 },
+    styles: { halign: 'center' },
+    columnStyles: {
+      0: { halign: 'left', cellWidth: 80 },
+    }
+  });
+
+  // 4. Total General
+  const finalY = doc.lastAutoTable.finalY + 10;
+  doc.setFontSize(16);
+  doc.setTextColor(0);
+  doc.text(`Total General: $${subtotal.toLocaleString()}`, 196, finalY, { align: "right" });
+
+  // 5. Pie de página
+  doc.setFontSize(10);
+  doc.setTextColor(150);
+  doc.text("Gracias por elegir VerdeMont. Tu elegancia, nuestra pasión.", 105, finalY + 20, { align: "center" });
+
+  // Guardar PDF
+  doc.save(`Pedido_VerdeMont_${new Date().getTime()}.pdf`);
+}
+
+/**
+ * Convierte una imagen en URL a Base64.
+ */
+function getImageDataURL(url) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.crossOrigin = 'Anonymous';
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = img.width;
+      canvas.height = img.height;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0);
+      resolve(canvas.toDataURL('image/png'));
+    };
+    img.onerror = reject;
+    img.src = url;
+  });
+}
+
+/**
+ * Redirige al usuario a WhatsApp con un mensaje prellenado.
+ */
+function enviarWhatsApp(carrito, subtotal) {
+  const numero = "573203168616";
+  let mensaje = "¡Hola VerdeMont! 🌿\n\nMe gustaría finalizar mi compra de los siguientes productos:\n\n";
+
+  carrito.forEach(item => {
+    mensaje += `▪ *${item.nombre}*\n   Cantidad: ${item.cantidad}\n   Precio: $${(item.precio * item.cantidad).toLocaleString()}\n\n`;
+  });
+
+  mensaje += `*Total a pagar: $${subtotal.toLocaleString()}*\n\nQuedo atento(a) para coordinar el pago y envío.`;
+
+  const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
+  window.open(url, '_blank');
 }
 
 /* ---------- subtotal / badge / render ---------- */
@@ -171,8 +317,16 @@ function setupOffcanvasControls() {
   if (btnVaciar) btnVaciar.addEventListener('click', () => {
     if (confirm('¿Deseas vaciar el carrito?')) vaciarCarrito();
   });
-  if (btnPagar) btnPagar.addEventListener('click', () => {
-    alert('Funcionalidad de pago no implementada en este demo.');
+  if (btnPagar) btnPagar.addEventListener('click', async () => {
+    if (leerCarrito().length === 0) {
+      alert('Tu carrito está vacío.');
+      return;
+    }
+
+    const confirmacion = confirm('Serás redirigido a un asesor de VerdeMont para finalizar tu compra por WhatsApp. ¿Deseas continuar?');
+    if (confirmacion) {
+      await finalizarPedido();
+    }
   });
 }
 
@@ -183,6 +337,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderCarritoOffcanvas();
     setupCartListDelegation();
     setupOffcanvasControls();
+    cargarDependenciasPDF(); // Cargar dependencias de PDF en segundo plano
   }, 50);
 });
 
