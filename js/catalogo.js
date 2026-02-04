@@ -8,8 +8,15 @@ async function cargarProductos() {
   catalogoContainers.forEach(container => {
     container.innerHTML = '';
     productos.forEach(producto => {
-      const productoHTML = ` 
-  <div class="producto"> 
+      const favIcon = (typeof esFavorito === 'function' && esFavorito(producto.id)) ? 'fa-solid' : 'fa-regular';
+
+      const productoHTML = `
+  <div class="producto">
+    <div class="fav-container">
+       <button class="btn-fav" onclick="toggleFavoritoInterno(this, '${producto.id}', '${producto.nombre.replace(/'/g, "\\'")}', ${producto.precio}, '${producto.imagen}')">
+          <i class="${favIcon} fa-heart"></i>
+       </button>
+    </div>
     <a href="detalle.html?id=${producto.id}">
       <img src="${producto.imagen}" alt="${producto.nombre}">
       <h3>${producto.nombre}</h3>
@@ -24,6 +31,20 @@ async function cargarProductos() {
       container.innerHTML += productoHTML;
     });
   });
+}
+
+/**
+ * Alterna un producto en favoritos y actualiza el icono.
+ */
+function toggleFavoritoInterno(btn, id, nombre, precio, imagen) {
+  const icon = btn.querySelector('i');
+  if (icon.classList.contains('fa-solid')) {
+    quitarProductoDeFavoritos(id);
+    icon.classList.replace('fa-solid', 'fa-regular');
+  } else {
+    agregarProductoAFavoritos({ id, nombre, precio, imagen });
+    icon.classList.replace('fa-regular', 'fa-solid');
+  }
 }
 
 document.addEventListener('DOMContentLoaded', cargarProductos);
