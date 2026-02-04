@@ -8,6 +8,7 @@ function leerFavoritos() {
 function guardarFavoritos(favoritos) {
   localStorage.setItem(FAV_KEY, JSON.stringify(favoritos));
   actualizarBadgeFavoritos();
+  renderizarFavoritos();
 }
 
 function agregarProductoAFavoritos(producto) {
@@ -22,6 +23,9 @@ function quitarProductoDeFavoritos(productId) {
   const favoritos = leerFavoritos();
   const nuevo = favoritos.filter(p => String(p.id) !== String(productId));
   guardarFavoritos(nuevo);
+
+  // Si estamos en una página de catálogo, actualizar el corazón si existe
+  actualizarIconosCorazon(productId, false);
 }
 
 function esFavorito(productId) {
@@ -38,11 +42,95 @@ function actualizarBadgeFavoritos() {
   badge.style.display = total > 0 ? 'inline-block' : 'none';
 }
 
+function renderizarFavoritos() {
+    const listaCont = document.getElementById('fav-items-list');
+    const emptyMsg = document.getElementById('fav-empty-msg');
+    if (!listaCont) return;
+
+    const favoritos = leerFavoritos();
+    if (favoritos.length === 0) {
+        listaCont.innerHTML = '';
+        if (emptyMsg) emptyMsg.style.display = 'block';
+        return;
+    }
+
+    if (emptyMsg) emptyMsg.style.display = 'none';
+    listaCont.innerHTML = '';
+    favoritos.forEach(item => {
+        const itemEl = document.createElement('div');
+        itemEl.className = 'fav-item d-flex align-items-center mb-3';
+        itemEl.style.color = 'white';
+        itemEl.innerHTML = `
+            <img src="${item.imagen || ''}" alt="${item.nombre}" style="width:64px;height:64px;object-fit:cover;border-radius:6px;margin-right:10px;">
+            <div style="flex:1;">
+                <div style="font-size: 0.9rem;"><strong>${item.nombre}</strong></div>
+                <div style="font-size: 0.85rem;">$${(item.precio).toFixed(2)}</div>
+                <div class="mt-1 d-flex gap-2">
+                    <button type="button" class="btn btn-sm btn-success btn-add-cart-from-fav" data-id="${item.id}" title="Agregar al carrito">🛒</button>
+                    <button type="button" class="btn btn-sm btn-dark btn-remove-fav" data-id="${item.id}">Eliminar</button>
+                </div>
+            </div>
+        `;
+        listaCont.appendChild(itemEl);
+    });
+}
+
+function actualizarIconosCorazon(productId, favorited) {
+    const hearts = document.querySelectorAll(`.fav-btn[data-id="${productId}"] i`);
+    hearts.forEach(h => {
+        if (favorited) {
+            h.classList.remove('fa-regular');
+            h.classList.add('fa-solid');
+        } else {
+            h.classList.remove('fa-solid');
+            h.classList.add('fa-regular');
+        }
+    });
+}
+
+function favListClickHandler(e) {
+    const target = e.target;
+    const btnRemove = target.closest('.btn-remove-fav');
+    const btnAddToCart = target.closest('.btn-add-cart-from-fav');
+
+    if (btnRemove) {
+        const id = btnRemove.dataset.id;
+        quitarProductoDeFavoritos(id);
+    }
+
+    if (btnAddToCart) {
+        const id = btnAddToCart.dataset.id;
+        const favoritos = leerFavoritos();
+        const producto = favoritos.find(p => String(p.id) === String(id));
+        if (producto && window.agregarProductoAlCarrito) {
+            window.agregarProductoAlCarrito(producto);
+        }
+    }
+}
+
 // Inicialización
 document.addEventListener('DOMContentLoaded', () => {
-  setTimeout(() => {
+  const initBadge = () => {
     actualizarBadgeFavoritos();
-  }, 100);
+    renderizarFavoritos();
+
+    const listaCont = document.getElementById('fav-items-list');
+    if (listaCont) {
+        listaCont.removeEventListener('click', favListClickHandler);
+        listaCont.addEventListener('click', favListClickHandler);
+    }
+
+    const favOffcanvas = document.getElementById('offcanvasFavorites');
+    if (favOffcanvas) {
+        favOffcanvas.addEventListener('show.bs.offcanvas', renderizarFavoritos);
+    }
+  };
+
+  if (customElements.get('special-header')) {
+    initBadge();
+  } else {
+    customElements.whenDefined('special-header').then(initBadge);
+  }
 });
 
 // Exponer funciones
@@ -51,3 +139,4 @@ window.agregarProductoAFavoritos = agregarProductoAFavoritos;
 window.quitarProductoDeFavoritos = quitarProductoDeFavoritos;
 window.esFavorito = esFavorito;
 window.actualizarBadgeFavoritos = actualizarBadgeFavoritos;
+window.renderizarFavoritos = renderizarFavoritos;

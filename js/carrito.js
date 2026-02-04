@@ -90,12 +90,89 @@ async function finalizarPedido() {
   const subtotal = getSubtotal();
 
   try {
-    // Redirigir a WhatsApp con la "Factura Digital" en texto
+    // 1. Generar el PDF
+    await generarPDF(carrito, subtotal);
+
+    // 2. Redirigir a WhatsApp
     enviarWhatsApp(carrito, subtotal);
+
+    // 3. Vaciar carrito opcionalmente o dejarlo para que el usuario vea
+    // vaciarCarrito();
   } catch (error) {
     console.error('Error al finalizar el pedido:', error);
     alert('Hubo un error al procesar tu pedido. Por favor intenta de nuevo.');
   }
+}
+
+/**
+ * Genera un PDF profesional del pedido.
+ */
+async function generarPDF(carrito, total) {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  const pageWidth = doc.internal.pageSize.getWidth();
+
+  // -- Encabezado con Logo --
+  try {
+    // Intentamos cargar el logo (debe estar en la misma ruta)
+    const logoImg = "LogoVerdeMontBlanco.png";
+    doc.addImage(logoImg, 'PNG', (pageWidth / 2) - 25, 10, 50, 20);
+  } catch (e) {
+    console.warn("No se pudo cargar el logo para el PDF", e);
+  }
+
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(18);
+  doc.text("RESUMEN DE PEDIDO", pageWidth / 2, 40, { align: "center" });
+
+  doc.setFontSize(10);
+  doc.setFont("helvetica", "normal");
+  doc.text(`Fecha: ${new Date().toLocaleDateString()}`, pageWidth - 20, 50, { align: "right" });
+
+  doc.setLineWidth(0.5);
+  doc.line(20, 55, pageWidth - 20, 55);
+
+  // -- Tabla de Productos --
+  let y = 65;
+  doc.setFont("helvetica", "bold");
+  doc.text("Producto", 20, y);
+  doc.text("Cant.", 120, y);
+  doc.text("P. Unit", 145, y);
+  doc.text("Total", 175, y);
+
+  y += 10;
+  doc.setFont("helvetica", "normal");
+  doc.setLineWidth(0.1);
+
+  carrito.forEach(item => {
+    if (y > 270) { doc.addPage(); y = 20; }
+
+    const itemTotal = item.precio * item.cantidad;
+
+    // Dividir nombre si es muy largo
+    const splitTitle = doc.splitTextToSize(item.nombre, 90);
+    doc.text(splitTitle, 20, y);
+    doc.text(item.cantidad.toString(), 120, y);
+    doc.text(`$${item.precio.toFixed(2)}`, 145, y);
+    doc.text(`$${itemTotal.toFixed(2)}`, 175, y);
+
+    y += (splitTitle.length * 7);
+    doc.line(20, y - 5, pageWidth - 20, y - 5);
+  });
+
+  // -- Total --
+  y += 10;
+  doc.setFontSize(14);
+  doc.setFont("helvetica", "bold");
+  doc.text(`TOTAL A PAGAR: $${total.toFixed(2)}`, pageWidth - 20, y, { align: "right" });
+
+  // -- Pie de página --
+  doc.setFontSize(9);
+  doc.setFont("helvetica", "italic");
+  doc.text("Gracias por confiar en VerdeMont. Un asesor te contactará por WhatsApp.", pageWidth / 2, 285, { align: "center" });
+
+  // Guardar PDF
+  doc.save(`Pedido_VerdeMont_${Date.now()}.pdf`);
 }
 
 /**
@@ -105,7 +182,7 @@ function enviarWhatsApp(carrito, subtotal) {
   const numero = "573203168616";
   const fecha = new Date().toLocaleDateString();
 
-  let mensaje = `🌿 *FACTURA DIGITAL - VERDEMONT* 🌿\n`;
+  let mensaje = `🌿 *PEDIDO - VERDEMONT* 🌿\n`;
   mensaje += `------------------------------------------\n`;
   mensaje += `📅 *Fecha:* ${fecha}\n\n`;
   mensaje += `✅ *Resumen del Pedido:*\n`;
@@ -114,13 +191,13 @@ function enviarWhatsApp(carrito, subtotal) {
     const itemTotal = item.precio * item.cantidad;
     mensaje += `▪ *${item.nombre}*\n`;
     mensaje += `   Cant: ${item.cantidad} x $${item.precio.toLocaleString()}\n`;
-    mensaje += `   Subtotal: *$${itemTotal.toLocaleString()}*\n\n`;
+    mensaje += `   Total: *$${itemTotal.toLocaleString()}*\n\n`;
   });
 
   mensaje += `------------------------------------------\n`;
   mensaje += `💰 *TOTAL GENERAL: $${subtotal.toLocaleString()}*\n`;
   mensaje += `------------------------------------------\n\n`;
-  mensaje += `¡Hola! Me gustaría finalizar mi compra con estos productos. Quedo atento(a) para coordinar el pago y el envío. ✨`;
+  mensaje += `¡Hola! Acabo de generar mi pedido y el PDF de la compra. Me gustaría finalizar el proceso. Quedo atento(a) para coordinar el pago y el envío. ✨`;
 
   const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
   window.open(url, '_blank');
@@ -164,7 +241,7 @@ function renderCarritoOffcanvas() {
           <button type="button" class="btn btn-sm btn-outline-secondary btn-decrease" data-id="${String(item.id)}">-</button>
           <span class="mx-2 qty">${item.cantidad}</span>
           <button type="button" class="btn btn-sm btn-outline-secondary btn-increase" data-id="${String(item.id)}">+</button>
-          <button type="button" class="btn btn-sm btn-danger ms-3 btn-remove" data-id="${String(item.id)}">Eliminar</button>
+          <button type="button" class="btn btn-sm btn-dark ms-3 btn-remove" data-id="${String(item.id)}">Eliminar</button>
         </div>
       </div>
     `;
