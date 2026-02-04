@@ -13,7 +13,7 @@ async function cargarProductos() {
       const productoHTML = `
   <div class="producto">
     <div class="fav-container">
-       <button class="btn-fav" onclick="toggleFavoritoInterno(this, '${producto.id}', '${producto.nombre.replace(/'/g, "\\'")}', ${producto.precio}, '${producto.imagen}')">
+       <button class="btn-fav" data-id="${producto.id}" onclick="toggleFavoritoInterno(this, '${producto.id}', '${producto.nombre.replace(/'/g, "\\'")}', ${producto.precio}, '${producto.imagen}')">
           <i class="${favIcon} fa-heart"></i>
        </button>
     </div>

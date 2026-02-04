@@ -114,33 +114,37 @@ async function generarPDF(carrito, total) {
 
   // -- Encabezado con Logo --
   try {
-    // Intentamos cargar el logo (debe estar en la misma ruta)
-    const logoImg = "LogoVerdeMontBlanco.png";
-    doc.addImage(logoImg, 'PNG', (pageWidth / 2) - 25, 10, 50, 20);
+    const logoImg = "img/LogoVerdeMont.png";
+    doc.addImage(logoImg, 'PNG', (pageWidth / 2) - 25, 10, 50, 50);
   } catch (e) {
     console.warn("No se pudo cargar el logo para el PDF", e);
   }
 
   doc.setFont("helvetica", "bold");
-  doc.setFontSize(18);
-  doc.text("RESUMEN DE PEDIDO", pageWidth / 2, 40, { align: "center" });
+  doc.setFontSize(22);
+  doc.setTextColor(20, 80, 20); // Un tono verde oscuro elegante
+  doc.text("RESUMEN DE PEDIDO", pageWidth / 2, 70, { align: "center" });
 
   doc.setFontSize(10);
   doc.setFont("helvetica", "normal");
-  doc.text(`Fecha: ${new Date().toLocaleDateString()}`, pageWidth - 20, 50, { align: "right" });
+  doc.setTextColor(100);
+  doc.text(`Fecha: ${new Date().toLocaleDateString()}`, pageWidth - 20, 80, { align: "right" });
 
   doc.setLineWidth(0.5);
-  doc.line(20, 55, pageWidth - 20, 55);
+  doc.setDrawColor(20, 80, 20);
+  doc.line(20, 85, pageWidth - 20, 85);
 
   // -- Tabla de Productos --
-  let y = 65;
+  let y = 95;
   doc.setFont("helvetica", "bold");
+  doc.setFontSize(12);
+  doc.setTextColor(0);
   doc.text("Producto", 20, y);
   doc.text("Cant.", 120, y);
   doc.text("P. Unit", 145, y);
   doc.text("Total", 175, y);
 
-  y += 10;
+  y += 8;
   doc.setFont("helvetica", "normal");
   doc.setLineWidth(0.1);
 
@@ -150,21 +154,25 @@ async function generarPDF(carrito, total) {
     const itemTotal = item.precio * item.cantidad;
 
     // Dividir nombre si es muy largo
-    const splitTitle = doc.splitTextToSize(item.nombre, 90);
+    const splitTitle = doc.splitTextToSize(item.nombre, 85);
     doc.text(splitTitle, 20, y);
     doc.text(item.cantidad.toString(), 120, y);
-    doc.text(`$${item.precio.toFixed(2)}`, 145, y);
-    doc.text(`$${itemTotal.toFixed(2)}`, 175, y);
+    doc.text(`$${item.precio.toLocaleString()}`, 145, y);
+    doc.text(`$${itemTotal.toLocaleString()}`, 175, y);
 
-    y += (splitTitle.length * 7);
+    y += (splitTitle.length * 7) + 2;
+    doc.setDrawColor(200);
+    doc.setLineWidth(0.1);
     doc.line(20, y - 5, pageWidth - 20, y - 5);
+    y += 5;
   });
 
   // -- Total --
-  y += 10;
+  y += 5;
   doc.setFontSize(14);
   doc.setFont("helvetica", "bold");
-  doc.text(`TOTAL A PAGAR: $${total.toFixed(2)}`, pageWidth - 20, y, { align: "right" });
+  doc.setTextColor(20, 80, 20);
+  doc.text(`TOTAL A PAGAR: $${total.toLocaleString()}`, pageWidth - 20, y, { align: "right" });
 
   // -- Pie de página --
   doc.setFontSize(9);
@@ -309,12 +317,18 @@ function setupOffcanvasControls() {
 
 /* ---------- inicialización al cargar DOM ---------- */
 document.addEventListener('DOMContentLoaded', () => {
-  setTimeout(() => {
+  const initCart = () => {
     actualizarBadge();
     renderCarritoOffcanvas();
     setupCartListDelegation();
     setupOffcanvasControls();
-  }, 50);
+  };
+
+  if (customElements.get('special-header')) {
+    initCart();
+  } else {
+    customElements.whenDefined('special-header').then(initCart);
+  }
 });
 
 /* ---------- exponer funciones globalmente ---------- */

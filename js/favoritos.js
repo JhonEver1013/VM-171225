@@ -16,6 +16,9 @@ function agregarProductoAFavoritos(producto) {
   if (!favoritos.find(p => String(p.id) === String(producto.id))) {
     favoritos.push(producto);
     guardarFavoritos(favoritos);
+
+    // Sincronizar iconos
+    actualizarIconosCorazon(producto.id, true);
   }
 }
 
@@ -76,7 +79,7 @@ function renderizarFavoritos() {
 }
 
 function actualizarIconosCorazon(productId, favorited) {
-    const hearts = document.querySelectorAll(`.fav-btn[data-id="${productId}"] i`);
+    const hearts = document.querySelectorAll(`.btn-fav[data-id="${productId}"] i, .btn-fav-detalle[data-id="${productId}"] i`);
     hearts.forEach(h => {
         if (favorited) {
             h.classList.remove('fa-regular');

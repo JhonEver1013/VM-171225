@@ -22,7 +22,7 @@ async function cargarDetalleProducto() {
             <div class="d-flex gap-2 align-items-center">
               <a href="Anillos.html" class="btn btn-secondary">Volver al catálogo</a>
               <button id="btnAgregarCarrito" class="btn btn-success">Agregar al carrito</button>
-              <button id="btnFavoritoDetalle" class="btn-fav-detalle">
+              <button id="btnFavoritoDetalle" class="btn-fav-detalle" data-id="${producto.id}">
                 <i class="${(typeof esFavorito === 'function' && esFavorito(producto.id)) ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
               </button>
             </div>
