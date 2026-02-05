@@ -19,6 +19,17 @@ async function cargarDetalleProducto() {
             <p class="card-text">${producto.descripcion}</p>
             <p class="card-text"><strong>Precio:</strong> $${producto.precio.toFixed(2)}</p>
 
+            <div class="mb-4">
+              <label for="ring-size" class="form-label"><strong>Talla del anillo:</strong></label>
+              <select id="ring-size" class="form-select w-auto" style="border-radius: 20px; border: 1px solid #1a4d2e;">
+                <option value="5">Talla 5</option>
+                <option value="6">Talla 6</option>
+                <option value="7" selected>Talla 7 (Estándar)</option>
+                <option value="8">Talla 8</option>
+                <option value="9">Talla 9</option>
+              </select>
+            </div>
+
             <div class="d-flex gap-2 align-items-center">
               <a href="Anillos.html" class="btn btn-secondary">Volver al catálogo</a>
               <button id="btnAgregarCarrito" class="btn btn-success">Agregar al carrito</button>
@@ -48,11 +59,14 @@ async function cargarDetalleProducto() {
       });
 
       document.getElementById('btnAgregarCarrito').addEventListener('click', () => {
+        const selectedSize = document.getElementById('ring-size').value;
         const prodParaCarrito = {
-          id: producto.id,
-          nombre: producto.nombre,
+          id: `${producto.id}-${selectedSize}`, // Crear un ID único por talla si es necesario, o solo guardar la talla
+          originalId: producto.id,
+          nombre: `${producto.nombre} (Talla ${selectedSize})`,
           precio: producto.precio,
-          imagen: producto.imagen
+          imagen: producto.imagen,
+          talla: selectedSize
         };
 
         if (typeof window.agregarProductoAlCarrito === 'function') {

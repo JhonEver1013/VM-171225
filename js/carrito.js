@@ -191,8 +191,7 @@ function enviarWhatsApp(carrito, subtotal) {
   const fecha = new Date().toLocaleDateString();
 
   let mensaje = `🌿 *PEDIDO - VERDEMONT* 🌿\n`;
-  mensaje += `------------------------------------------\n`;
-  mensaje += `📅 *Fecha:* ${fecha}\n\n`;
+  mensaje += `------------------------------------------\n\n`;
   mensaje += `✅ *Resumen del Pedido:*\n`;
 
   carrito.forEach(item => {

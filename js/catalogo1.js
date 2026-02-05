@@ -25,10 +25,6 @@ function mostrarProductos(productos) {
       <h3>${producto.nombre}</h3>
       <p>Precio: $${producto.precio.toFixed(2)}</p>
     </a>
-
-    <button class="btn-add-cart" onclick="agregarProductoAlCarrito('${producto.id}')">
-      Añadir al carrito
-    </button>
   </div>
 `;
     catalogoContainer.innerHTML += productoHTML;

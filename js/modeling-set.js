@@ -1,39 +1,46 @@
-/* js/modeling-set.js - Lógica para el slider de fotografías */
+/* js/modeling-set.js - Lógica actualizada para el rediseño de fotografías */
 
 document.addEventListener('DOMContentLoaded', () => {
     const track = document.querySelector('.photo-track');
-    const slides = Array.from(document.querySelectorAll('.photo-slide'));
+    const frames = Array.from(document.querySelectorAll('.photo-frame'));
     const nextBtn = document.querySelector('.mod-btn.next');
     const prevBtn = document.querySelector('.mod-btn.prev');
 
-    if (!track || slides.length === 0) return;
+    if (!track || frames.length === 0) return;
 
     let currentIndex = 0;
     let autoSlideInterval;
 
     /**
-     * Actualiza la posición del track para mostrar el slide actual.
+     * Actualiza la posición del track para mostrar el frame actual.
      */
     function updateSlider() {
+        // Desplazamos el track
         track.style.transform = `translateX(-${currentIndex * 100}%)`;
-        slides.forEach((slide, index) => {
-            slide.classList.toggle('active', index === currentIndex);
+
+        // Opcional: Podríamos añadir una clase 'active' si queremos efectos extra
+        frames.forEach((frame, index) => {
+            if (index === currentIndex) {
+                frame.style.opacity = "1";
+            } else {
+                frame.style.opacity = "0.8"; // Ligera transparencia a los que no están
+            }
         });
     }
 
     /**
-     * Avanza al siguiente slide.
+     * Avanza al siguiente frame.
      */
     function nextSlide() {
-        currentIndex = (currentIndex + 1) % slides.length;
+        currentIndex = (currentIndex + 1) % frames.length;
         updateSlider();
     }
 
     /**
-     * Retrocede al slide anterior.
+     * Retrocede al frame anterior.
      */
     function prevSlide() {
-        currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+        currentIndex = (currentIndex - 1 + frames.length) % frames.length;
         updateSlider();
     }
 
@@ -42,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
      */
     function startAutoSlide() {
         stopAutoSlide();
-        autoSlideInterval = setInterval(nextSlide, 4500);
+        autoSlideInterval = setInterval(nextSlide, 5000);
     }
 
     /**
@@ -56,25 +63,25 @@ document.addEventListener('DOMContentLoaded', () => {
     if (nextBtn) {
         nextBtn.addEventListener('click', () => {
             nextSlide();
-            startAutoSlide(); // Reiniciar el timer al interactuar
+            startAutoSlide();
         });
     }
 
     if (prevBtn) {
         prevBtn.addEventListener('click', () => {
             prevSlide();
-            startAutoSlide(); // Reiniciar el timer al interactuar
+            startAutoSlide();
         });
     }
 
-    // Pausar auto-slide cuando el usuario interactúa con la imagen
-    const photoContainer = document.querySelector('.photo-container');
-    if (photoContainer) {
-        photoContainer.addEventListener('mouseenter', stopAutoSlide);
-        photoContainer.addEventListener('mouseleave', startAutoSlide);
+    // Pausar auto-slide al pasar el mouse por el viewport
+    const viewport = document.querySelector('.photo-viewport');
+    if (viewport) {
+        viewport.addEventListener('mouseenter', stopAutoSlide);
+        viewport.addEventListener('mouseleave', startAutoSlide);
     }
 
     // Inicializar
-    startAutoSlide();
     updateSlider();
+    startAutoSlide();
 });
