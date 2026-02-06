@@ -98,6 +98,12 @@ class specialHeader extends HTMLElement {
           document.body.appendChild(off);
         }
       });
+
+      // Asegurar que los badges se actualicen al renderizar el header
+      if (window.actualizarBadgeFavoritos) window.actualizarBadgeFavoritos();
+      if (window.actualizarBadge) window.actualizarBadge();
+      if (window.renderCarritoOffcanvas) window.renderCarritoOffcanvas();
+      if (window.renderizarFavoritos) window.renderizarFavoritos();
     }, 0);
   }
 }

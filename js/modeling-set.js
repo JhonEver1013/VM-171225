@@ -1,87 +1,69 @@
-/* js/modeling-set.js - Lógica actualizada para el rediseño de fotografías */
+document.addEventListener('DOMContentLoaded', function() {
+    const carousels = document.querySelectorAll('.modeling-set');
 
-document.addEventListener('DOMContentLoaded', () => {
-    const track = document.querySelector('.photo-track');
-    const frames = Array.from(document.querySelectorAll('.photo-frame'));
-    const nextBtn = document.querySelector('.mod-btn.next');
-    const prevBtn = document.querySelector('.mod-btn.prev');
+    carousels.forEach(carousel => {
+        const track = carousel.querySelector('.photo-track');
+        if (!track) return;
 
-    if (!track || frames.length === 0) return;
+        const frames = Array.from(track.children);
+        const nextBtn = carousel.querySelector('.mod-btn.next');
+        const prevBtn = carousel.querySelector('.mod-btn.prev');
 
-    let currentIndex = 0;
-    let autoSlideInterval;
+        let currentIndex = 0;
+        let isTransitioning = false;
 
-    /**
-     * Actualiza la posición del track para mostrar el frame actual.
-     */
-    function updateSlider() {
-        // Desplazamos el track
-        track.style.transform = `translateX(-${currentIndex * 100}%)`;
-
-        // Opcional: Podríamos añadir una clase 'active' si queremos efectos extra
+        // Inicializar: solo el primero es active
         frames.forEach((frame, index) => {
-            if (index === currentIndex) {
-                frame.style.opacity = "1";
+            if (index === 0) {
+                frame.classList.add('active');
             } else {
-                frame.style.opacity = "0.8"; // Ligera transparencia a los que no están
+                frame.classList.remove('active', 'exit');
             }
         });
-    }
 
-    /**
-     * Avanza al siguiente frame.
-     */
-    function nextSlide() {
-        currentIndex = (currentIndex + 1) % frames.length;
-        updateSlider();
-    }
+        function updateCarousel(newIndex, direction) {
+            if (isTransitioning) return;
+            isTransitioning = true;
 
-    /**
-     * Retrocede al frame anterior.
-     */
-    function prevSlide() {
-        currentIndex = (currentIndex - 1 + frames.length) % frames.length;
-        updateSlider();
-    }
+            const currentFrame = frames[currentIndex];
+            const nextFrame = frames[newIndex];
 
-    /**
-     * Inicia el desplazamiento automático.
-     */
-    function startAutoSlide() {
-        stopAutoSlide();
-        autoSlideInterval = setInterval(nextSlide, 5000);
-    }
+            // Animación de salida para el actual
+            currentFrame.classList.remove('active');
+            currentFrame.classList.add('exit');
 
-    /**
-     * Detiene el desplazamiento automático.
-     */
-    function stopAutoSlide() {
-        if (autoSlideInterval) clearInterval(autoSlideInterval);
-    }
+            // Preparar el siguiente
+            nextFrame.classList.add('active');
 
-    // Eventos de botones
-    if (nextBtn) {
-        nextBtn.addEventListener('click', () => {
-            nextSlide();
-            startAutoSlide();
-        });
-    }
+            // Limpiar después de la transición
+            setTimeout(() => {
+                currentFrame.classList.remove('exit');
+                isTransitioning = false;
+            }, 800); // Coincide con el tiempo de CSS
 
-    if (prevBtn) {
-        prevBtn.addEventListener('click', () => {
-            prevSlide();
-            startAutoSlide();
-        });
-    }
+            currentIndex = newIndex;
+        }
 
-    // Pausar auto-slide al pasar el mouse por el viewport
-    const viewport = document.querySelector('.photo-viewport');
-    if (viewport) {
-        viewport.addEventListener('mouseenter', stopAutoSlide);
-        viewport.addEventListener('mouseleave', startAutoSlide);
-    }
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                const nextIndex = (currentIndex + 1) % frames.length;
+                updateCarousel(nextIndex, 'next');
+            });
+        }
 
-    // Inicializar
-    updateSlider();
-    startAutoSlide();
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => {
+                const prevIndex = (currentIndex - 1 + frames.length) % frames.length;
+                updateCarousel(prevIndex, 'prev');
+            });
+        }
+
+        // Auto-play opcional
+        /*
+        setInterval(() => {
+            const nextIndex = (currentIndex + 1) % frames.length;
+            updateCarousel(nextIndex, 'next');
+        }, 5000);
+        */
+    });
 });

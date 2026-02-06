@@ -28,44 +28,6 @@
 
 
     <section class="formulario">
-        <div class="inputs">
-            <label for="fullname">Nombre</label>
-            <input type="text" id="fullname" name="fullname" placeholder="Ingrese su nombre">
-            <br>
-            <label for="phone">Teléfono</label>
-            <input type="number" id="phone" name="phone" placeholder="Ingrese su telefono">
-
-            <br>
-            <label for="email">Correo Electrónico</label>
-            <input type="email" id="email" name="email" placeholder="Ingrese su correo electrónico" required>
-
-            <br>
-            <label for="message">Mensaje</label>
-            <textarea id="message" name="message" placeholder="Escriba su mensaje aquí" rows="5" required></textarea>
-
-            <!-- Botón Enviar Mensaje -->
-             <!-- Comentario para indicar la sección del botón -->
-            <button type="submit" class="send-button" onclick="openModal()">Enviar</button>  <!-- Crea un botón que envía el formulario y llama a la función `openModal` al hacer clic -->
-
-            <!-- Modal -->  <!-- Comentario para indicar la sección del modal -->
-            <dialog class="modal" id="mainModal" aria-labelledby="modalTitle">  <!-- Crea un diálogo modal con una clase para estilos y un ID único para manipulación en JavaScript -->
-                <h1 id="modalTitle">Mensaje Enviado</h1>  <!-- Título del modal que describe el contenido -->
-                <button class="bien" onclick="closeModal()">OK</button>  <!-- Botón dentro del modal que cierra el modal al hacer clic llamando a `closeModal` -->
-            </dialog>
-
-                <script>
-                function openModal() {  // Define la función `openModal` que abre el modal//
-                    const modal = document.getElementById('mainModal');  // Obtiene el elemento del modal por su ID //
-                    modal.showModal(); // Abre el modal  <!-- Abre el modal usando el método `showModal` -->
-                }
-
-                function closeModal() {  //Define la función `closeModal` que cierra el modal//
-                    const modal = document.getElementById('mainModal');  // Obtiene el elemento del modal por su ID//
-                    modal.close(); // Cierra el modal  //Cierra el modal usando el método `close`//
-                }
-                </script>
-
-        </div>
 
         <div class="datosContacto">
 

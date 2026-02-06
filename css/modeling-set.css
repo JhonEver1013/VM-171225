@@ -1,4 +1,4 @@
-/* css/modeling-set.css - Rediseño con aspecto de fotografía y texto lateral */
+/* css/modeling-set.css - Rediseño con aspecto de fotografía, texto lateral y transición de giro */
 
 .modeling-set {
     padding: 100px 0;
@@ -9,6 +9,8 @@
 .modeling-set .text-section {
     text-align: left;
     padding-right: 40px;
+    z-index: 5; /* Asegurar que el texto esté por encima si hay solapamiento */
+    position: relative;
 }
 
 .modeling-set .text-section h2 {
@@ -37,27 +39,53 @@
     max-width: 70vw;
     aspect-ratio: 4 / 5;
     position: relative;
-    overflow: visible; /* Permitir que la rotación se vea */
+    overflow: visible;
 }
 
 .photo-track {
-    display: flex;
     width: 100%;
     height: 100%;
-    transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1.000);
+    position: relative;
 }
 
 .photo-frame {
-    min-width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
     height: 100%;
     background: #fff;
     padding: 15px 15px 45px 15px; /* Estilo Polaroid */
     box-shadow: 0 15px 35px rgba(0,0,0,0.15);
     transform: rotate(var(--rotation, 0deg));
-    transition: transform 0.5s ease;
-    flex-shrink: 0;
+    transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 1s cubic-bezier(0.4, 0, 0.2, 1),
+                visibility 1s;
     display: flex;
     flex-direction: column;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 1;
+}
+
+.photo-frame.active {
+    opacity: 1;
+    visibility: visible;
+    z-index: 2;
+}
+
+/* Efecto de salida: giro a la izquierda y desaparición */
+.photo-frame.exit-left {
+    transform: rotate(-45deg) translateX(-150%) scale(0.8);
+    opacity: 0;
+    z-index: 3;
+}
+
+/* Efecto de salida para el botón previo: giro a la derecha */
+.photo-frame.exit-right {
+    transform: rotate(45deg) translateX(150%) scale(0.8);
+    opacity: 0;
+    z-index: 3;
 }
 
 .photo-frame img {
@@ -65,11 +93,6 @@
     height: 100%;
     object-fit: cover;
     border: 1px solid #f0f0f0;
-}
-
-.photo-frame:hover {
-    transform: rotate(0deg) scale(1.02);
-    z-index: 10;
 }
 
 /* Botones de navegación */
