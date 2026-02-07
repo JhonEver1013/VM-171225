@@ -101,10 +101,10 @@
   background-color: #ffffff;          /* FONDO BLANCO */
   border: 1px solid #ddd;             /* Borde gris claro */
   border-radius: 10px;                /* Bordes redondeados */
-  padding: 20px;
-  margin: 30px 10px;
+  padding: 15px;
+  margin: 15px 8px;
   text-align: center;
-  width: 28%;
+  width: 22%;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);  /* SOMBRA ELEGANTE */
   box-sizing: border-box;             /* Ajusta correctamente el tamaño */
 }
@@ -150,9 +150,11 @@ text-decoration: none;
 }
 .producto h3 {
   color:rgb(58, 58, 58);
+  font-size: 1rem;
 }
 .producto p {
   color:rgb(100, 100, 100);
+  font-size: 0.9rem;
 }
 
 /* Estilos responsivos */
@@ -204,13 +206,13 @@ text-decoration: none;
 
 /* Botón negro elegante */
 .btn-add-cart {
-  width: 50%;
+  width: 70%;
   background-color: #000;
   color: #fff;
   border: none;
-  padding: 12px 0;
+  padding: 10px 0;
   border-radius: 8px;
-  font-size: 16px;
+  font-size: 14px;
   cursor: pointer;
   font-weight: 600;
   margin-top: 12px;

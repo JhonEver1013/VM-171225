@@ -3,51 +3,14 @@
    ============================================================ */
 .main-container {
   display: flex; 
-  height: calc(100vh - var(--header-height));
   width: 100%;
-}
-
-/* ============================================================
-   SIDEBAR IZQUIERDO
-   ============================================================ */
-.sidebar {
-  width: 15%;
-  background-color: #ebebeb;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  padding: 20px;
-  box-sizing: border-box;
-}
-
-.sidebar ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.sidebar ul li {
-  margin-bottom: 20px;
-}
-
-.sidebar ul li a {
-  text-decoration: none;
-  color: rgb(136, 136, 136);
-  font-size: 16px;
-  display: block;
-  padding: 10px;
-  transition: background-color 0.3s ease;
-}
-
-.sidebar ul li a:hover {
-  background-color: #c7c7c7;
 }
 
 /* ============================================================
    COLUMNA DERECHA (CATÁLOGO + BANNER)
    ============================================================ */
 .catalog-right {
-  width: 85%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -70,10 +33,10 @@
   background-color: #ffffff;       /* ← FONDO BLANCO COMPLETO */
   border: 1px solid #ddd;
   border-radius: 10px;
-  padding: 20px;
-  margin: 30px 10px;
+  padding: 15px;
+  margin: 15px 8px;
   text-align: center;
-  width: 28%;
+  width: 22%;
   box-sizing: border-box;
 
   /* OPCIONAL: sombra para que resalte más */
@@ -124,10 +87,12 @@
 
 .producto h3 {
   color: rgb(58, 58, 58);
+  font-size: 1rem;
 }
 
 .producto p {
   color: rgb(100, 100, 100);
+  font-size: 0.9rem;
 }
 
 /* ============================================================
@@ -170,28 +135,10 @@
     padding: 12px;
   }
 
-  /* Sidebar arriba */
-  .sidebar {
-    width: 100% !important;
-    flex: 0 0 auto;
-    order: 1;
-    padding: 12px 8px;
-  }
-
-  .sidebar ul {
-    display: flex;
-    justify-content: space-around;
-  }
-
-  .sidebar ul li {
-    margin: 0;
-  }
-
   /* Columna derecha debajo del sidebar */
   .catalog-right {
     width: 100% !important;
     flex: 0 0 auto;
-    order: 2;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -260,13 +207,13 @@
 
 /* Botón negro elegante (global) */
 .btn-add-cart {
-  width: 50%;
+  width: 70%;
   background-color: #000;
   color: #fff;
   border: none;
-  padding: 12px 0;
+  padding: 10px 0;
   border-radius: 8px;
-  font-size: 16px;
+  font-size: 14px;
   cursor: pointer;
   font-weight: 600;
   margin-top: 12px;

@@ -82,7 +82,7 @@ class specialHeader extends HTMLElement {
           <a href="index.html">Inicio</a>
           <a href="Anillos.html">Anillos</a>
           <a href="formularioContactanos.html">Contáctanos</a>
-          <a href="quiénesSomos.html">Quiénes Somos</a>
+          <a href="quienesSomos.html">Quiénes Somos</a>
         </section>
       </nav>
 
@@ -132,7 +132,7 @@ class specialfooter extends HTMLElement {
         <div class="column3">
           <h3>Links</h3>
           <li><a href="formularioContactanos.html">Contactanos</a></li>
-          <li><a href="quiénesSomos.html">Quienes somos</a></li>
+          <li><a href="quienesSomos.html">Quienes somos</a></li>
         </div>
         <div class="column4">
           <p>Desarrollado con dedicación por</p>

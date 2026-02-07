@@ -112,28 +112,34 @@ function favListClickHandler(e) {
 }
 
 // Inicialización
-document.addEventListener('DOMContentLoaded', () => {
-  const initBadge = () => {
-    actualizarBadgeFavoritos();
-    renderizarFavoritos();
+function initFavoritos() {
+  actualizarBadgeFavoritos();
+  renderizarFavoritos();
 
-    const listaCont = document.getElementById('fav-items-list');
-    if (listaCont) {
-        listaCont.removeEventListener('click', favListClickHandler);
-        listaCont.addEventListener('click', favListClickHandler);
-    }
-
-    const favOffcanvas = document.getElementById('offcanvasFavorites');
-    if (favOffcanvas) {
-        favOffcanvas.addEventListener('show.bs.offcanvas', renderizarFavoritos);
-    }
-  };
-
-  if (customElements.get('special-header')) {
-    initBadge();
-  } else {
-    customElements.whenDefined('special-header').then(initBadge);
+  const listaCont = document.getElementById('fav-items-list');
+  if (listaCont) {
+      listaCont.removeEventListener('click', favListClickHandler);
+      listaCont.addEventListener('click', favListClickHandler);
   }
+
+  const favOffcanvas = document.getElementById('offcanvasFavorites');
+  if (favOffcanvas) {
+      favOffcanvas.removeEventListener('show.bs.offcanvas', renderizarFavoritos);
+      favOffcanvas.addEventListener('show.bs.offcanvas', renderizarFavoritos);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  if (customElements.get('special-header')) {
+    initFavoritos();
+  } else {
+    customElements.whenDefined('special-header').then(initFavoritos);
+  }
+});
+
+// Respaldo para asegurar que se ejecute si hay demoras en la definición del custom element
+window.addEventListener('load', () => {
+  setTimeout(initFavoritos, 500);
 });
 
 // Exponer funciones
