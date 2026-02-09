@@ -108,6 +108,10 @@ async function finalizarPedido() {
  * Genera un PDF profesional del pedido.
  */
 async function generarPDF(carrito, total) {
+  if (!window.jspdf) {
+    console.error("jsPDF no está cargado");
+    return;
+  }
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
   const pageWidth = doc.internal.pageSize.getWidth();
@@ -125,20 +129,22 @@ async function generarPDF(carrito, total) {
   // -- Encabezado con Logo --
   try {
     const logoImg = await loadImage("img/LogoVerdeMont.png");
-    doc.addImage(logoImg, 'PNG', (pageWidth / 2) - 25, 10, 50, 50);
+    // Ajustar tamaño manteniendo proporción si es posible, o usar uno estándar
+    doc.addImage(logoImg, 'PNG', (pageWidth / 2) - 30, 10, 60, 45);
   } catch (e) {
     console.warn("No se pudo cargar el logo para el PDF", e);
   }
 
   doc.setFont("helvetica", "bold");
-  doc.setFontSize(22);
+  doc.setFontSize(24);
   doc.setTextColor(20, 80, 20); // Verde esmeralda elegante
-  doc.text("RESUMEN DE PEDIDO", pageWidth / 2, 70, { align: "center" });
+  doc.text("COTIZACIÓN DE PEDIDO", pageWidth / 2, 65, { align: "center" });
 
   doc.setFontSize(10);
   doc.setFont("helvetica", "normal");
   doc.setTextColor(100);
-  doc.text(`Fecha: ${new Date().toLocaleDateString()}`, pageWidth - 20, 80, { align: "right" });
+  doc.text(`Fecha: ${new Date().toLocaleDateString()}`, pageWidth - 20, 75, { align: "right" });
+  doc.text(`ID Pedido: #VM-${Math.floor(Math.random() * 10000)}`, pageWidth - 20, 80, { align: "right" });
 
   doc.setLineWidth(0.5);
   doc.setDrawColor(20, 80, 20);
@@ -146,20 +152,20 @@ async function generarPDF(carrito, total) {
 
   // -- Tabla de Productos --
   let y = 95;
+
+  // Fondo para el encabezado de la tabla
+  doc.setFillColor(240, 245, 240);
+  doc.rect(20, y - 5, pageWidth - 40, 8, 'F');
+
   doc.setFont("helvetica", "bold");
   doc.setFontSize(11);
-  doc.setTextColor(50);
+  doc.setTextColor(20, 80, 20);
 
   // Encabezados de tabla
-  doc.text("PRODUCTO", 20, y);
+  doc.text("PRODUCTO", 25, y);
   doc.text("CANT.", 120, y, { align: "center" });
   doc.text("P. UNITARIO", 150, y, { align: "right" });
   doc.text("TOTAL", 185, y, { align: "right" });
-
-  y += 5;
-  doc.setLineWidth(0.2);
-  doc.setDrawColor(20, 80, 20);
-  doc.line(20, y, pageWidth - 20, y);
 
   y += 10;
   doc.setFont("helvetica", "normal");
@@ -174,8 +180,8 @@ async function generarPDF(carrito, total) {
     const itemTotal = (item.precio || 0) * (item.cantidad || 1);
 
     // Nombre del producto con ajuste de línea
-    const splitTitle = doc.splitTextToSize(item.nombre || "Producto", 90);
-    doc.text(splitTitle, 20, y);
+    const splitTitle = doc.splitTextToSize(item.nombre || "Producto", 85);
+    doc.text(splitTitle, 25, y);
 
     // Valores
     doc.text((item.cantidad || 1).toString(), 120, y, { align: "center" });
@@ -187,35 +193,36 @@ async function generarPDF(carrito, total) {
 
     // Línea divisoria suave
     doc.setDrawColor(230);
-    doc.line(20, nextY, pageWidth - 20, nextY);
+    doc.setLineWidth(0.1);
+    doc.line(20, nextY - 2, pageWidth - 20, nextY - 2);
 
-    y = nextY + 8;
+    y = nextY + 5;
   });
 
   // -- Resumen Final --
-  if (y > 250) {
+  if (y > 240) {
     doc.addPage();
     y = 30;
   }
 
-  y += 5;
+  y += 10;
   doc.setLineWidth(0.5);
   doc.setDrawColor(20, 80, 20);
-  doc.line(130, y, 185, y);
+  doc.line(120, y, 185, y);
 
   y += 10;
   doc.setFontSize(14);
   doc.setFont("helvetica", "bold");
   doc.setTextColor(20, 80, 20);
-  doc.text(`TOTAL A PAGAR:`, 130, y);
-  doc.text(`$${total.toLocaleString()}`, 185, y, { align: "right" });
+  doc.text(`TOTAL A PAGAR:`, 120, y);
+  doc.text(`$${total.toLocaleString()} COP`, 185, y, { align: "right" });
 
   // -- Pie de página --
   doc.setFontSize(9);
   doc.setFont("helvetica", "italic");
   doc.setTextColor(100);
-  doc.text("Este documento es un resumen de su intención de compra.", pageWidth / 2, 280, { align: "center" });
-  doc.text("Gracias por elegir VerdeMont - Joyería Artesanal Colombiana.", pageWidth / 2, 285, { align: "center" });
+  doc.text("Este documento es un resumen de su intención de compra para ser finalizada vía WhatsApp.", pageWidth / 2, 280, { align: "center" });
+  doc.text("VerdeMont - Joyería Artesanal Colombiana | Cra 78b # 39a 57 Sur, Bogotá", pageWidth / 2, 285, { align: "center" });
 
   // Guardar PDF
   doc.save(`Pedido_VerdeMont_${Date.now()}.pdf`);
@@ -240,7 +247,7 @@ function enviarWhatsApp(carrito, subtotal) {
   });
 
   mensaje += `------------------------------------------\n`;
-  mensaje += `💰 *TOTAL GENERAL: $${subtotal.toLocaleString()}*\n`;
+  mensaje += `💰 *TOTAL GENERAL: $${subtotal.toLocaleString()} COP*\n`;
   mensaje += `------------------------------------------\n\n`;
   mensaje += `¡Hola! Acabo de generar mi pedido y el PDF de la compra. Me gustaría finalizar el proceso. Quedo atento(a) para coordinar el pago y el envío. ✨`;
 
@@ -281,7 +288,7 @@ function renderCarritoOffcanvas() {
       <img src="${item.imagen || ''}" alt="${item.nombre}" style="width:64px;height:64px;object-fit:cover;border-radius:6px;margin-right:10px;">
       <div style="flex:1;">
         <div><strong>${item.nombre}</strong></div>
-        <div>$${(item.precio).toFixed(2)}</div>
+        <div>$${(item.precio).toLocaleString()}</div>
         <div class="mt-1 d-flex align-items-center">
           <button type="button" class="btn btn-sm btn-outline-secondary btn-decrease" data-id="${String(item.id)}">-</button>
           <span class="mx-2 qty">${item.cantidad}</span>
@@ -293,7 +300,7 @@ function renderCarritoOffcanvas() {
     listaCont.appendChild(itemEl);
   });
   if (subtotalCont) {
-    subtotalCont.innerHTML = `<h5>Subtotal: $${getSubtotal().toFixed(2)}</h5>`;
+    subtotalCont.innerHTML = `<h5>Subtotal: $${getSubtotal().toLocaleString()}</h5>`;
   }
 }
 

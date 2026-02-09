@@ -1,116 +1,87 @@
 
-
-
-/*Responsividad: Ajustes para pantallas pequeñas*/
+/* Responsividad: Ajustes para pantallas pequeñas */
 @media screen and (max-width: 768px) {
   .main-container {
     flex-direction: column; /* Cambia a diseño vertical */
   }
 
-  .sidebar {
-    width: 100%; 
-    flex-direction: row; /*Cambia la orientacion del contenido a horizontal */
-    justify-content: space-around; /*Espacia uniformemente las opciones*/
-    padding: 10px 0; 
-  }
-
   .catalog-container {
     width: 100%; /* Contenido ocupa todo el ancho */
   }
-
-  .sidebar ul {
-    display: flex; /*Hace que los elementos esten en fila */
-    padding: 0; /*Elimina padding adicional */
-  }
-
-  .sidebar ul li {
-    margin: 0 10px; 
-  }
-
-  .sidebar ul li a {
-    font-size: 14px; 
-    padding: 5px; 
-  }
 }
 
-
-/*Banner de las fotos con modelos*/
-.BanFotosModJoy img{
+/* Banner de las fotos con modelos */
+.BanFotosModJoy img {
   width: 100%;
   max-width: 100vw;
-  
 }
 
-/*Texto presentacion de la pagina Inicio*/
+/* Texto presentacion de la pagina Inicio */
 .PresentationText {
   width: 100%;
   max-width: 100vw;
   margin: 0;
   padding: 0;
-  text-align: center; /* Centra el texto y la imagen */
-  overflow: hidden;   /* Evita desbordes si la imagen es muy grande */
-}
-.PresentationText img {
-  width: 100vw;        /* Ocupa todo el ancho visible del navegador */
-  height: auto;        /* Mantiene proporción */
-  display: block;      /* Quita espacios en blanco abajo */
-  object-fit: cover;   /* Cubre el espacio sin deformar */
-}
-.PresentationText h2 {  
-  font-family: 'Dancing Script', 'Great Vibes', 'Playfair Display', cursive;  /* Define fuentes cursivas elegantes, usando las alternativas en orden si alguna no está disponible */
-  font-size: 1.5rem;  /* Tamaño de fuente de aproximadamente 24px, adaptable a diferentes pantallas */
-  font-weight: 400;  /* Grosor normal del texto, mantiene un estilo suave y legible */
-  font-style: italic;  /* Aplica cursiva al texto, reforzando el estilo poético */
-  line-height: 1.8;  /* Da más espacio entre líneas para una lectura fluida y elegante */
-  color: #07550b;  /* Color gris oscuro, más suave que el negro puro para un aspecto refinado */
-  padding: 3rem 20vw;  /* Añade espacio interior: 2rem arriba y abajo, 10vw a los lados para equilibrio visual */
-  text-align: center;  /* Centra el texto horizontalmente en el contenedor */
-  background-color: #fff;  /* Fondo blanco opcional para mejorar la legibilidad sobre imágenes o fondos oscuros */
+  text-align: center;
+  overflow: hidden;
 }
 
-/* Ajuste para pantallas pequeñas (smartphones) */
+.PresentationText img {
+  width: 100vw;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.PresentationText h2 {  
+  font-family: 'Dancing Script', 'Great Vibes', 'Playfair Display', cursive;
+  font-size: 1.5rem;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.8;
+  color: #07550b;
+  padding: 3rem 20vw;
+  text-align: center;
+  background-color: #fff;
+}
+
+/* Ajuste para pantallas pequeñas */
 @media (max-width: 768px) {
   .PresentationText h2 {
-    font-size: 1rem;      /* Reduce un poco el tamaño */
-    padding: 3rem 10vw;     /* Menos espacio lateral para pantallas angostas */
-    line-height: 1.6;       /* Ajusta la separación de líneas */
+    font-size: 1rem;
+    padding: 3rem 10vw;
+    line-height: 1.6;
   }
 }
 
-
-
-
-
-
-
-
-
-/*PRODUCTOS CATALOGO*/
-
-
+/* PRODUCTOS CATALOGO EN INICIO */
 .catalog-container {
-  display: flex; /* Activa Flexbox */
-  flex-wrap: wrap; /* Permite que los elementos se envuelvan en varias líneas */
-  justify-content: center; /* Centra los elementos horizontalmente */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 20px; 
   padding: 60px 20px;
-  /*box-sizing: border-box;*/
 }
 
 .producto {
-  background-color: #ffffff;          /* FONDO BLANCO */
-  border: 1px solid #ddd;             /* Borde gris claro */
-  border-radius: 10px;                /* Bordes redondeados */
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
   padding: 15px;
   margin: 15px 8px;
   text-align: center;
-  width: 30%;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);  /* SOMBRA ELEGANTE */
-  box-sizing: border-box;             /* Ajusta correctamente el tamaño */
+  width: 28%;                         /* Tamaño solicitado: 28% */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  box-sizing: border-box;
+
+  /* Soporte para efecto 3D tilt */
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: transform 0.1s ease-out, box-shadow 0.3s ease;
 }
 
 .producto {
-  position: relative; /* Para posicionar el botón de favoritos */
+  position: relative;
 }
 
 .fav-container {
@@ -145,68 +116,51 @@
   width: 100%;
   border-radius: 8px;
 }
-.producto a{
-text-decoration: none;
+
+.producto a {
+  text-decoration: none;
 }
+
 .producto h3 {
-  color:rgb(58, 58, 58);
+  color: rgb(58, 58, 58);
   font-size: 1rem;
+  margin-top: 10px;
 }
+
 .producto p {
-  color:rgb(100, 100, 100);
+  color: rgb(100, 100, 100);
   font-size: 0.9rem;
 }
 
 /* Estilos responsivos */
 @media (max-width: 1024px) {
-  .catalog-container {
-    grid-template-columns: repeat(2, 1fr); /* 2 columnas para pantallas medianas */
-  }
   .producto {    
     width: 40%;
   }
 }
 
 @media (max-width: 768px) {
-  .catalog-container {
-    grid-template-columns: repeat(2, 1fr); /* 1 columna para pantallas pequeñas */
-    
-  }
   .producto {    
     width: 45%;
-    margin: 0px;    
+    margin: 8px 4px;
   }
   .producto h3 {
     font-size: 15px;
   }
 }
 
-/* ===========================
-   Hover suave para tarjetas
-   Sólo en dispositivos con cursor (no en touch)
-   =========================== */
+/* Hover suave para tarjetas */
 @media (hover: hover) and (pointer: fine) {
-  .producto {
-    /* preparación para animación */
-    will-change: transform, box-shadow;
-    transition: transform 220ms cubic-bezier(.2,.8,.2,1),
-                box-shadow 220ms cubic-bezier(.2,.8,.2,1);
-    transform-origin: center center;
-  }
-
   .producto:hover,
   .producto:focus-visible {
-    transform: scale(1.05); /* leve ampliación */
-    box-shadow: 0 12px 28px rgba(0,0,0,0.18); /* sombra más pronunciada */
-    z-index: 3; /* asegurar que quede por encima */
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+    z-index: 3;
   }
 }
 
-
-
 /* Botón negro elegante */
 .btn-add-cart {
-  width: 70%;
+  width: 80%;
   background-color: #000;
   color: #fff;
   border: none;
@@ -219,19 +173,17 @@ text-decoration: none;
   transition: all 0.25s ease-in-out;
 }
 
-/* Hover (solo PC) */
 @media (hover: hover) and (pointer: fine) {
   .btn-add-cart:hover {
     background-color: #222;
-    transform: scale(1.03);
+    transform: translateZ(20px);
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
   }
 }
 
-/* En móvil sin animaciones fuertes */
 @media (max-width: 768px) {
   .btn-add-cart {
-    width: 90%;
+    width: 100%;
     transform: none;
     box-shadow: none;
   }
