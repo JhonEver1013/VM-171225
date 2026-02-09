@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (index === 0) {
                 frame.classList.add('active');
             } else {
-                frame.classList.remove('active', 'exit');
+                frame.classList.remove('active', 'exit-left', 'exit-right');
             }
         });
 
@@ -27,19 +27,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const currentFrame = frames[currentIndex];
             const nextFrame = frames[newIndex];
+            const exitClass = direction === 'next' ? 'exit-left' : 'exit-right';
 
             // Animación de salida para el actual
             currentFrame.classList.remove('active');
-            currentFrame.classList.add('exit');
+            currentFrame.classList.add(exitClass);
 
             // Preparar el siguiente
             nextFrame.classList.add('active');
 
             // Limpiar después de la transición
             setTimeout(() => {
-                currentFrame.classList.remove('exit');
+                currentFrame.classList.remove('exit-left', 'exit-right');
                 isTransitioning = false;
-            }, 800); // Coincide con el tiempo de CSS
+            }, 1000); // Coincide con el tiempo de CSS (1s)
 
             currentIndex = newIndex;
         }

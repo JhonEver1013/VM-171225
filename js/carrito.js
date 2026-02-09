@@ -112,9 +112,19 @@ async function generarPDF(carrito, total) {
   const doc = new jsPDF();
   const pageWidth = doc.internal.pageSize.getWidth();
 
+  // Función para cargar imagen
+  const loadImage = (url) => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => resolve(img);
+      img.onerror = reject;
+      img.src = url;
+    });
+  };
+
   // -- Encabezado con Logo --
   try {
-    const logoImg = "img/LogoVerdeMont.png";
+    const logoImg = await loadImage("img/LogoVerdeMont.png");
     doc.addImage(logoImg, 'PNG', (pageWidth / 2) - 25, 10, 50, 50);
   } catch (e) {
     console.warn("No se pudo cargar el logo para el PDF", e);
@@ -122,7 +132,7 @@ async function generarPDF(carrito, total) {
 
   doc.setFont("helvetica", "bold");
   doc.setFontSize(22);
-  doc.setTextColor(20, 80, 20); // Un tono verde oscuro elegante
+  doc.setTextColor(20, 80, 20); // Verde esmeralda elegante
   doc.text("RESUMEN DE PEDIDO", pageWidth / 2, 70, { align: "center" });
 
   doc.setFontSize(10);
@@ -137,47 +147,75 @@ async function generarPDF(carrito, total) {
   // -- Tabla de Productos --
   let y = 95;
   doc.setFont("helvetica", "bold");
-  doc.setFontSize(12);
-  doc.setTextColor(0);
-  doc.text("Producto", 20, y);
-  doc.text("Cant.", 120, y);
-  doc.text("P. Unit", 145, y);
-  doc.text("Total", 175, y);
+  doc.setFontSize(11);
+  doc.setTextColor(50);
 
-  y += 8;
+  // Encabezados de tabla
+  doc.text("PRODUCTO", 20, y);
+  doc.text("CANT.", 120, y, { align: "center" });
+  doc.text("P. UNITARIO", 150, y, { align: "right" });
+  doc.text("TOTAL", 185, y, { align: "right" });
+
+  y += 5;
+  doc.setLineWidth(0.2);
+  doc.setDrawColor(20, 80, 20);
+  doc.line(20, y, pageWidth - 20, y);
+
+  y += 10;
   doc.setFont("helvetica", "normal");
-  doc.setLineWidth(0.1);
+  doc.setTextColor(0);
 
   carrito.forEach(item => {
-    if (y > 270) { doc.addPage(); y = 20; }
+    if (y > 260) {
+      doc.addPage();
+      y = 20;
+    }
 
-    const itemTotal = item.precio * item.cantidad;
+    const itemTotal = (item.precio || 0) * (item.cantidad || 1);
 
-    // Dividir nombre si es muy largo
-    const splitTitle = doc.splitTextToSize(item.nombre, 85);
+    // Nombre del producto con ajuste de línea
+    const splitTitle = doc.splitTextToSize(item.nombre || "Producto", 90);
     doc.text(splitTitle, 20, y);
-    doc.text(item.cantidad.toString(), 120, y);
-    doc.text(`$${item.precio.toLocaleString()}`, 145, y);
-    doc.text(`$${itemTotal.toLocaleString()}`, 175, y);
 
-    y += (splitTitle.length * 7) + 2;
-    doc.setDrawColor(200);
-    doc.setLineWidth(0.1);
-    doc.line(20, y - 5, pageWidth - 20, y - 5);
-    y += 5;
+    // Valores
+    doc.text((item.cantidad || 1).toString(), 120, y, { align: "center" });
+    doc.text(`$${(item.precio || 0).toLocaleString()}`, 150, y, { align: "right" });
+    doc.text(`$${itemTotal.toLocaleString()}`, 185, y, { align: "right" });
+
+    // Calcular siguiente Y basado en el texto dividido
+    const nextY = y + (splitTitle.length * 6);
+
+    // Línea divisoria suave
+    doc.setDrawColor(230);
+    doc.line(20, nextY, pageWidth - 20, nextY);
+
+    y = nextY + 8;
   });
 
-  // -- Total --
+  // -- Resumen Final --
+  if (y > 250) {
+    doc.addPage();
+    y = 30;
+  }
+
   y += 5;
+  doc.setLineWidth(0.5);
+  doc.setDrawColor(20, 80, 20);
+  doc.line(130, y, 185, y);
+
+  y += 10;
   doc.setFontSize(14);
   doc.setFont("helvetica", "bold");
   doc.setTextColor(20, 80, 20);
-  doc.text(`TOTAL A PAGAR: $${total.toLocaleString()}`, pageWidth - 20, y, { align: "right" });
+  doc.text(`TOTAL A PAGAR:`, 130, y);
+  doc.text(`$${total.toLocaleString()}`, 185, y, { align: "right" });
 
   // -- Pie de página --
   doc.setFontSize(9);
   doc.setFont("helvetica", "italic");
-  doc.text("Gracias por confiar en VerdeMont. Un asesor te contactará por WhatsApp.", pageWidth / 2, 285, { align: "center" });
+  doc.setTextColor(100);
+  doc.text("Este documento es un resumen de su intención de compra.", pageWidth / 2, 280, { align: "center" });
+  doc.text("Gracias por elegir VerdeMont - Joyería Artesanal Colombiana.", pageWidth / 2, 285, { align: "center" });
 
   // Guardar PDF
   doc.save(`Pedido_VerdeMont_${Date.now()}.pdf`);
