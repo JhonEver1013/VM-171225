@@ -30,7 +30,7 @@
     }
 
     function applyTiltToCards() {
-        const cards = document.querySelectorAll('.producto');
+        const cards = document.querySelectorAll('.producto, .card-tilt');
         cards.forEach(card => {
             // Evitar duplicar listeners
             if (card.dataset.tiltApplied === "true") return;

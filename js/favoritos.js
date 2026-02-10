@@ -61,22 +61,26 @@ function renderizarFavoritos() {
     listaCont.innerHTML = '';
     favoritos.forEach(item => {
         const itemEl = document.createElement('div');
-        itemEl.className = 'fav-item d-flex align-items-center mb-3';
+        itemEl.className = 'fav-item d-flex align-items-center mb-3 p-2 rounded';
+        itemEl.style.backgroundColor = 'rgba(255,255,255,0.05)';
+        itemEl.style.border = '1px solid rgba(255,255,255,0.1)';
+        itemEl.style.transition = 'background 0.3s ease';
         itemEl.style.color = 'white';
+
         itemEl.innerHTML = `
-            <img src="${item.imagen || ''}" alt="${item.nombre}" style="width:64px;height:64px;object-fit:cover;border-radius:6px;margin-right:10px;">
-            <div style="flex:1;">
-                <div style="font-size: 0.9rem;"><strong>${item.nombre}</strong></div>
-                <div style="font-size: 0.85rem;">$${(item.precio).toFixed(2)}</div>
-                <div class="mt-1 d-flex gap-2">
-                    <button type="button" class="btn btn-sm btn-success btn-add-cart-from-fav" data-id="${item.id}" title="Agregar al carrito">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5"/>
-                            <path d="M3.102 4l1.313 7h8.17l1.313-7z"/>
-                            <path d="M5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4"/>
-                        </svg>
+            <div class="position-relative">
+                <img src="${item.imagen || ''}" alt="${item.nombre}" style="width:70px;height:70px;object-fit:cover;border-radius:8px; border: 1px solid rgba(255,255,255,0.2);">
+            </div>
+            <div class="ms-3" style="flex:1;">
+                <div style="font-size: 0.95rem; font-weight: 600; color: #fff;">${item.nombre}</div>
+                <div style="font-size: 0.9rem; color: #00d1b2; font-weight: 500;">$${(item.precio).toLocaleString()} COP</div>
+                <div class="mt-2 d-flex gap-2">
+                    <button type="button" class="btn btn-sm btn-outline-light btn-add-cart-from-fav" data-id="${item.id}" style="border-radius: 20px; font-size: 0.75rem; padding: 2px 10px;">
+                        <i class="fas fa-shopping-cart me-1"></i> Añadir
                     </button>
-                    <button type="button" class="btn btn-sm btn-dark btn-remove-fav" data-id="${item.id}">Eliminar</button>
+                    <button type="button" class="btn btn-sm btn-link text-light btn-remove-fav p-0" data-id="${item.id}" style="font-size: 0.75rem; text-decoration: none; opacity: 0.7;">
+                        <i class="fas fa-trash-alt"></i> Quitar
+                    </button>
                 </div>
             </div>
         `;

@@ -10,7 +10,7 @@ class specialHeader extends HTMLElement {
         <div class="container-fluid">
 
           <!--Logo VM-->
-          <a class="logoVM" href="#"><img src="logoBrillo.gif" alt="logo"></a>
+          <a class="logoVM" href="index.html"><img src="logoBrillo.gif" alt="logo"></a>
 
           <!--CUADRO DE BUSQUEDA-->
           <form class="d-flex" role="search">

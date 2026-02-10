@@ -35,11 +35,13 @@
     border-radius: 20px;
     overflow: hidden;
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    /* Ajuste de sombra para evitar el glitch de línea recta */
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2), 0 5px 15px rgba(0,0,0,0.1);
     opacity: 0;
     transform: scale(0.8) rotate(calc(var(--offset) * 5deg)) translateZ(calc(var(--offset) * -50px));
     z-index: calc(10 - var(--offset));
     pointer-events: none;
+    background-color: #fff; /* Fondo blanco para evitar transparencias extrañas */
 }
 
 .at-image-frame.active {
@@ -49,9 +51,9 @@
     pointer-events: auto;
 }
 
-/* Mostrar un par de imágenes detrás */
+/* Mostrar un par de imágenes detrás con mayor visibilidad */
 .at-image-frame:not(.active) {
-    opacity: 0.3;
+    opacity: 0.6; /* Aumentado de 0.3 a 0.6 */
 }
 
 .at-image-frame img {
