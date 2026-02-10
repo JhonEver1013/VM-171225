@@ -117,10 +117,9 @@ class specialfooter extends HTMLElement {
           <img src="logoBrillo.gif" alt="logoBrillo">
           <p>Siguenos en</p>
           <div class="redes">
-            <a href="#" class="facebook"><i class="fa-brands fa-facebook-f"></i></a>
-            <a href="#" class="whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
-            <a href="#" class="instagram"><i class="fa-brands fa-instagram"></i></a>
-            <a href="#" class="twitter"><i class="fa-brands fa-twitter"></i></a>
+            <a href="https://www.facebook.com/profile.php?id=61574158557384" class="facebook" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="https://wa.me/573203168616" class="whatsapp" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+            <a href="https://www.instagram.com/verdemontjoyas/" class="instagram" target="_blank"><i class="fa-brands fa-instagram"></i></a>
           </div>
         </div>
         <div class="column2">

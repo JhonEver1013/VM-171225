@@ -1,0 +1,134 @@
+/* css/animated-testimonials.css */
+.animated-testimonials-container {
+    padding: 80px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.at-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+    min-height: 500px;
+}
+
+.at-image-section {
+    flex: 1;
+    position: relative;
+    height: 450px;
+    perspective: 1000px;
+}
+
+.at-image-stack {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.at-image-frame {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    opacity: 0;
+    transform: scale(0.8) rotate(calc(var(--offset) * 5deg)) translateZ(calc(var(--offset) * -50px));
+    z-index: calc(10 - var(--offset));
+    pointer-events: none;
+}
+
+.at-image-frame.active {
+    opacity: 1;
+    transform: scale(1) rotate(0deg) translateZ(0);
+    z-index: 20;
+    pointer-events: auto;
+}
+
+/* Mostrar un par de imágenes detrás */
+.at-image-frame:not(.active) {
+    opacity: 0.3;
+}
+
+.at-image-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.at-content-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.at-text-content {
+    transition: all 0.4s ease;
+}
+
+.at-quote {
+    font-size: 1.8rem;
+    line-height: 1.4;
+    color: #333;
+    font-weight: 500;
+    margin-bottom: 24px;
+    font-style: italic;
+}
+
+.at-name {
+    font-size: 1.5rem;
+    color: #008f39; /* Emerald */
+    margin-bottom: 4px;
+    font-weight: 700;
+}
+
+.at-designation {
+    font-size: 1rem;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.at-nav {
+    display: flex;
+    gap: 16px;
+    margin-top: 40px;
+}
+
+.at-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 1px solid #ddd;
+    background: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.at-btn:hover {
+    background: #f8f9fa;
+    transform: scale(1.1);
+    border-color: #008f39;
+    color: #008f39;
+}
+
+@media (max-width: 991px) {
+    .at-wrapper {
+        flex-direction: column;
+        gap: 40px;
+    }
+    .at-image-section {
+        width: 100%;
+        height: 350px;
+    }
+}

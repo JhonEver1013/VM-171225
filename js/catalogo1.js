@@ -30,7 +30,6 @@ function mostrarProductos(productos) {
       <h3>${producto.nombre}</h3>
       <p>Precio: $${producto.precio.toLocaleString()}</p>
     </a>
-    <button class="btn-add-cart" onclick="agregarProductoAlCarrito('${producto.id}')">Agregar al Carrito</button>
   </div>
 `;
     catalogoContainer.innerHTML += productoHTML;
