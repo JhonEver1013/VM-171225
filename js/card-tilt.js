@@ -16,9 +16,9 @@
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
 
-        // Cálculo de rotación (sutil: máximo ~7 grados)
-        const rotateX = ((y - centerY) / centerY) * -7;
-        const rotateY = ((x - centerX) / centerX) * 7;
+        // Cálculo de rotación (Intenso: máximo ~15 grados)
+        const rotateX = ((y - centerY) / centerY) * -15;
+        const rotateY = ((x - centerX) / centerX) * 15;
 
         // Aplicar transformación con perspectiva
         card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;

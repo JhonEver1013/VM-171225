@@ -57,12 +57,22 @@
           }
           .hero-model-item {
             flex: 1;
-            min-width: 150px;
+            min-width: 120px;
             aspect-ratio: 4/5;
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 10px 20px rgba(0,0,0,0.1);
             transition: transform 0.3s ease;
+          }
+          /* Jerarquía 1-3-5 Grande / 2-4 Pequeño */
+          .hero-model-item:nth-child(1),
+          .hero-model-item:nth-child(3),
+          .hero-model-item:nth-child(5) {
+            flex: 1.6;
+          }
+          .hero-model-item:nth-child(2),
+          .hero-model-item:nth-child(4) {
+            flex: 0.8;
           }
           .hero-model-item img {
             width: 100%;

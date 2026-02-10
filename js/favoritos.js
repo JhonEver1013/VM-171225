@@ -72,14 +72,14 @@ function renderizarFavoritos() {
                 <img src="${item.imagen || ''}" alt="${item.nombre}" style="width:70px;height:70px;object-fit:cover;border-radius:8px; border: 1px solid rgba(255,255,255,0.2);">
             </div>
             <div class="ms-3" style="flex:1;">
-                <div style="font-size: 0.95rem; font-weight: 600; color: #fff;">${item.nombre}</div>
-                <div style="font-size: 0.9rem; color: #00d1b2; font-weight: 500;">$${(item.precio).toLocaleString()} COP</div>
+                <div style="font-size: 0.95rem; font-weight: 600; color: #ffffff;">${item.nombre}</div>
+                <div style="font-size: 0.9rem; color: #2ecc71; font-weight: 600;">$${(item.precio).toLocaleString()} COP</div>
                 <div class="mt-2 d-flex gap-2">
-                    <button type="button" class="btn btn-sm btn-outline-light btn-add-cart-from-fav" data-id="${item.id}" style="border-radius: 20px; font-size: 0.75rem; padding: 2px 10px;">
+                    <button type="button" class="btn btn-sm btn-outline-light btn-add-cart-from-fav" data-id="${item.id}" style="border-radius: 20px; font-size: 0.75rem; padding: 2px 10px; background: rgba(255,255,255,0.1);">
                         <i class="fas fa-shopping-cart me-1"></i> Añadir
                     </button>
-                    <button type="button" class="btn btn-sm btn-link text-light btn-remove-fav p-0" data-id="${item.id}" style="font-size: 0.75rem; text-decoration: none; opacity: 0.7;">
-                        <i class="fas fa-trash-alt"></i> Quitar
+                    <button type="button" class="btn btn-sm btn-outline-danger btn-remove-fav" data-id="${item.id}" style="border-radius: 20px; font-size: 0.75rem; padding: 2px 10px; border: 1px solid rgba(220, 53, 69, 0.5); color: #ff6b6b;">
+                        <i class="fas fa-trash-alt me-1"></i> Quitar
                     </button>
                 </div>
             </div>

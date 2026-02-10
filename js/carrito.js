@@ -126,29 +126,35 @@ async function generarPDF(carrito, total) {
     });
   };
 
+  // -- Marco Decorativo --
+  doc.setDrawColor(20, 80, 20);
+  doc.setLineWidth(0.5);
+  doc.rect(5, 5, pageWidth - 10, doc.internal.pageSize.getHeight() - 10);
+  doc.setLineWidth(0.2);
+  doc.rect(7, 7, pageWidth - 14, doc.internal.pageSize.getHeight() - 14);
+
   // -- Encabezado con Logo --
   try {
     const logoImg = await loadImage("img/LogoVerdeMont.png");
-    // Ajustar tamaño manteniendo proporción si es posible, o usar uno estándar
-    doc.addImage(logoImg, 'PNG', (pageWidth / 2) - 30, 10, 60, 45);
+    doc.addImage(logoImg, 'PNG', (pageWidth / 2) - 25, 15, 50, 38);
   } catch (e) {
     console.warn("No se pudo cargar el logo para el PDF", e);
   }
 
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(24);
-  doc.setTextColor(20, 80, 20); // Verde esmeralda elegante
-  doc.text("COTIZACIÓN DE PEDIDO", pageWidth / 2, 65, { align: "center" });
+  doc.setFont("times", "bold");
+  doc.setFontSize(22);
+  doc.setTextColor(20, 80, 20);
+  doc.text("COTIZACIÓN DE COMPRA", pageWidth / 2, 62, { align: "center" });
 
-  doc.setFontSize(10);
+  doc.setFontSize(9);
   doc.setFont("helvetica", "normal");
-  doc.setTextColor(100);
-  doc.text(`Fecha: ${new Date().toLocaleDateString()}`, pageWidth - 20, 75, { align: "right" });
-  doc.text(`ID Pedido: #VM-${Math.floor(Math.random() * 10000)}`, pageWidth - 20, 80, { align: "right" });
+  doc.setTextColor(80);
+  doc.text(`Fecha de emisión: ${new Date().toLocaleDateString()}`, pageWidth - 20, 72, { align: "right" });
+  doc.text(`Documento No: VM-${Date.now().toString().slice(-6)}`, pageWidth - 20, 77, { align: "right" });
 
   doc.setLineWidth(0.5);
   doc.setDrawColor(20, 80, 20);
-  doc.line(20, 85, pageWidth - 20, 85);
+  doc.line(20, 82, pageWidth - 20, 82);
 
   // -- Tabla de Productos --
   let y = 95;
@@ -352,7 +358,7 @@ function setupOffcanvasControls() {
       return;
     }
 
-    const confirmacion = confirm('Serás redirigido a un asesor de VerdeMont para finalizar tu compra por WhatsApp. ¿Deseas continuar?');
+    const confirmacion = confirm('Serás redirigido a un asesor de VerdeMont para finalizar su compra por WhatsApp. ¿Deseas continuar?');
     if (confirmacion) {
       await finalizarPedido();
     }

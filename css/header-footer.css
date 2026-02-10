@@ -143,7 +143,7 @@ form {
 }
 /*Con esto nos aseguramos de que la flecha sea de color negro*/
 .btn-close {
-  filter: none !important; /* Elimina cualquier inversión de color */
+  filter: invert(1) !important;
 
 }
 
@@ -364,11 +364,22 @@ header.navbar {
 
 /* ===== Ajustes offcanvas específicos (pegar al final de header-footer.css) ===== */
 
-/* Forzar que el offcanvas sea blanco y esté por encima */
+/* --- Glassmorphism para Sidebars (Carrito y Favoritos) --- */
 .offcanvas {
-  background-color: #fff !important;   /* carrito en blanco */
-  z-index: 11000 !important;           /* por encima del header fixed (9999) */
-  opacity: 1 !important;               /* asegurar opacidad normal */
+  background: rgba(10, 15, 10, 0.95) !important; /* Verde oscuro muy profundo */
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  color: #ffffff !important;
+  z-index: 11000 !important;
+  border-left: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Asegurar que el título sea blanco y elegante */
+.offcanvas-header h3 {
+  color: #ffffff !important;
+  font-weight: 600;
+  letter-spacing: 1px;
 }
 
 /* Backdrop: fondo oscuro detrás del offcanvas */
