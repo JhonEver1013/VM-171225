@@ -4,20 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VerdeMont</title>
-    <link rel="stylesheet" href="css/header-footer.css"> 
+    <link rel="stylesheet" href="css/header-footer.css">
     <link rel="stylesheet" href="css/productos.css">
-    <link rel="stylesheet" href="css/SegundoSec.css">  
-    <link rel="stylesheet" href="css/productos-inicio.css">    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"><!--enlaza la pagina de los iconos de redes--> 
-    
-    
+    <link rel="stylesheet" href="css/SegundoSec.css">
+    <link rel="stylesheet" href="css/productos-inicio.css">
+    <link rel="stylesheet" href="css/carrito-custom.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"><!--enlaza la pagina de los iconos de redes-->
+
+
     <!--Aqui nos conectamos con boostrap para que funcionen los iconos. header-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!--Aqui nos conectamos con boostrap JS para que funcione el Carrito Modal. header-->    
+    <!--Aqui nos conectamos con boostrap JS para que funcione el Carrito Modal. header-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    
 
-    
+
+
 </head>
 <body>
 
@@ -25,10 +26,10 @@
 
     <!--Texto presentacion-->
     <div class="PresentationText">
-        <img src="img/BannerA.jpg" alt="foto454">       
+        <img src="img/BannerA.jpg" alt="foto454">
         <h2>En VerdeMont creemos que la elegancia nace de la autenticidad. Nuestras joyas en plata 925 con esmeraldas colombianas guardan un brillo único, como fragmentos de luz verde.
 
-        Son diseños modernos y significativos, creados para acompañarte en lo cotidiano y en lo inolvidable. Más que joyas, son símbolos de conexión, orgullo y magia que resaltan lo mejor de ti.</h2>      
+        Son diseños modernos y significativos, creados para acompañarte en lo cotidiano y en lo inolvidable. Más que joyas, son símbolos de conexión, orgullo y magia que resaltan lo mejor de ti.</h2>
     </div>
 
 
@@ -52,7 +53,7 @@
         <h1>Las joyas hablan el lenguaje del amor eterno. Este San Valentín, di ‘te amo’ con un regalo inolvidable.</h1>
     </div>
 
-    
+
 
     <!--carrucel de fotos modelos traslado infinito-->
 
@@ -92,7 +93,8 @@
             <div class="modelosfot">
                 <img src="img/3pcs Rhinestone Decor Water Drop Jewelry Set.jpeg" alt="foto11">
             </div>
-            <!-- Duplicated set of images -->
+
+            <!-- Duplicated set of images for infinite scroll -->
             <div class="modelosfot">
                 <img src="img/foto1.jpg" alt="foto1">
             </div>
@@ -130,17 +132,18 @@
     </section>
 
 
- 
-    
-    <special-footer></special-footer>    
-    
+
+
+    <special-footer></special-footer>
+
     <!--Aqui conectamos el doc js con el html-->
     <script src="js/header-footer.js"></script>
     <script src="js/header-scroll.js"></script>
     <script src="js/carrito.js"></script>
     <script src="js/catalogo.js"></script>   <!-- si usas catalogo.js -->
     <script src="js/catalogo1.js"></script>  <!-- si usas catalogo1.js -->
-    
+    <script src="js/favoritos.js"></script>
+
 
 
 </body>

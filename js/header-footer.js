@@ -18,10 +18,16 @@ class specialHeader extends HTMLElement {
           </form>
 
           <div class="icon">
-            <!-- icono favorito (SVG) -->
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="iconFav" viewBox="0 0 16 16">
-              <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01z"/>
-            </svg>
+            <!-- Botón de favoritos (abre offcanvas) -->
+            <button id="fav-button" class="navbar-toggler position-relative" type="button"
+                    data-bs-toggle="offcanvas" data-bs-target="#offcanvasFavNavbar"
+                    aria-controls="offcanvasFavNavbar" aria-label="Favoritos">
+              <svg xmlns="http://www.w.org/2000/svg" width="16" height="16" fill="currentColor" class="iconFav" viewBox="0 0 16 16">
+                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01z"/>
+              </svg>
+              <span id="fav-badge"
+                    style="display:none; position:absolute; top:-6px; right:-6px; background:#dc3545; color:white; border-radius:50%; padding:2px 6px; font-size:12px;">0</span>
+            </button>
 
             <!-- icono perfil (SVG) -->
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="iconProfile" viewBox="0 0 16 16">
@@ -52,16 +58,28 @@ class specialHeader extends HTMLElement {
           <h3 id="offcanvasDarkNavbarLabel">Mi Carrito</h3>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
         </div>
-
         <div class="offcanvas-body">
-          <div id="cart-items-list" class="mb-3"><!-- carrito.js renderiza aquí --></div>
+          <div id="cart-items-list" class="mb-3"><!-- renderizado por carrito.js --></div>
           <div id="cart-subtotal" class="mt-2"></div>
           <div class="mt-3 d-flex gap-2">
-            <button id="cart-clear-btn" class="btn btn-outline-danger">Vaciar carrito</button>
+            <button id="cart-clear-btn" class="btn btn-dark">Vaciar carrito</button>
             <button id="cart-checkout-btn" class="btn btn-primary">Pagar pedido</button>
           </div>
         </div>
+      </div>
 
+      <!-- OFFCANVAS (MENÚ FAVORITOS) -->
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasFavNavbar" aria-labelledby="offcanvasFavNavbarLabel">
+        <div class="offcanvas-header">
+          <h3 id="offcanvasFavNavbarLabel">Mis Favoritos</h3>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+        </div>
+        <div class="offcanvas-body">
+          <div id="fav-items-list" class="mb-3"><!-- renderizado por favoritos.js --></div>
+          <div class="mt-3 d-grid gap-2">
+            <button id="fav-clear-btn" class="btn btn-dark">Vaciar favoritos</button>
+          </div>
+        </div>
       </div>
 
       <!-- NAV horizontal -->
@@ -76,16 +94,6 @@ class specialHeader extends HTMLElement {
 
     </div>
     `;
-
-    /* --- MOVEMOS EL OFFCANVAS AL <body> PARA EVITAR PROBLEMAS DE STACKING --- */
-    // Ejecutar con setTimeout(,0) para asegurarnos de que el DOM interno exista.
-    setTimeout(() => {
-      const off = this.querySelector('#offcanvasDarkNavbar');
-      if (off && off.parentElement !== document.body) {
-        document.body.appendChild(off);
-        // console.log('Offcanvas movido al body');
-      }
-    }, 0);
   }
 }
 
@@ -125,5 +133,19 @@ class specialfooter extends HTMLElement {
   }
 }
 
-customElements.define('special-header', specialHeader);
-customElements.define('special-footer', specialfooter);
+// Define custom elements once the DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+  customElements.define('special-header', specialHeader);
+  customElements.define('special-footer', specialfooter);
+
+  // Move offcanvas menus to the body to avoid stacking issues
+  // We wait for the custom elements to be defined and rendered.
+  setTimeout(() => {
+    const offcanvasNodes = document.querySelectorAll('special-header .offcanvas');
+    offcanvasNodes.forEach(node => {
+      if (node) {
+        document.body.appendChild(node);
+      }
+    });
+  }, 100); // A short delay to ensure the special-header has been rendered
+});

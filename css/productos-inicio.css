@@ -185,9 +185,13 @@ text-decoration: none;
   transition: all 0.25s ease-in-out;
 }
 
+.btn-add-fav.active {
+  color: red; /* Makes the filled heart icon red */
+}
+
 /* Hover (solo PC) */
 @media (hover: hover) and (pointer: fine) {
-  .btn-add-cart:hover {
+  .btn-add-cart:hover, .btn-add-fav:hover {
     background-color: #222;
     transform: scale(1.03);
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
@@ -201,4 +205,23 @@ text-decoration: none;
     transform: none;
     box-shadow: none;
   }
+}
+
+.botones-producto {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btn-add-fav {
+  background-color: #000;
+  color: #fff;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-top: 12px;
+  transition: all 0.25s ease-in-out;
 }
