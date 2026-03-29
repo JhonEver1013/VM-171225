@@ -1,0 +1,141 @@
+/* css/modeling-set.css - Rediseño con aspecto de fotografía, texto lateral y transición de giro */
+
+.modeling-set {
+    padding: 100px 0;
+    background-color: #fcfcfc;
+    overflow: hidden;
+}
+
+.modeling-set .text-section {
+    text-align: left;
+    padding-right: 40px;
+    z-index: 5; /* Asegurar que el texto esté por encima si hay solapamiento */
+    position: relative;
+}
+
+.modeling-set .text-section h2 {
+    font-family: 'Playfair Display', serif;
+    color: #1a4d2e;
+    margin-bottom: 25px;
+    font-weight: 400;
+}
+
+.modeling-set .text-section p {
+    color: #4a4a4a;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.modeling-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    position: relative;
+}
+
+.photo-viewport {
+    width: 380px;
+    max-width: 70vw;
+    aspect-ratio: 4 / 5;
+    position: relative;
+    overflow: visible;
+}
+
+.photo-track {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.photo-frame {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    padding: 15px 15px 45px 15px; /* Estilo Polaroid */
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+    transform: rotate(var(--rotation, 0deg));
+    transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 1s cubic-bezier(0.4, 0, 0.2, 1),
+                visibility 1s;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 1;
+}
+
+.photo-frame.active {
+    opacity: 1;
+    visibility: visible;
+    z-index: 2;
+}
+
+/* Efecto de salida: giro a la izquierda y desaparición */
+.photo-frame.exit-left {
+    transform: rotate(-45deg) translateX(-150%) scale(0.8);
+    opacity: 0;
+    z-index: 3;
+}
+
+/* Efecto de salida para el botón previo: giro a la derecha */
+.photo-frame.exit-right {
+    transform: rotate(45deg) translateX(150%) scale(0.8);
+    opacity: 0;
+    z-index: 3;
+}
+
+.photo-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: 1px solid #f0f0f0;
+}
+
+/* Botones de navegación */
+.mod-btn {
+    background: #fff;
+    color: #1a4d2e;
+    border: 1px solid #1a4d2e;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    z-index: 20;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.mod-btn:hover {
+    background: #1a4d2e;
+    color: #fff;
+}
+
+/* Responsividad */
+@media (max-width: 991.98px) {
+    .modeling-set .text-section {
+        text-align: center;
+        padding-right: 0;
+        margin-bottom: 50px;
+    }
+    .photo-viewport {
+        width: 320px;
+    }
+}
+
+@media (max-width: 576px) {
+    .photo-viewport {
+        width: 280px;
+    }
+    .mod-btn {
+        width: 40px;
+        height: 40px;
+    }
+}

@@ -10,7 +10,7 @@ class specialHeader extends HTMLElement {
         <div class="container-fluid">
 
           <!--Logo VM-->
-          <a class="logoVM" href="#"><img src="logoBrillo.gif" alt="logo"></a>
+          <a class="logoVM" href="index.html"><img src="logoBrillo.gif" alt="logo"></a>
 
           <!--CUADRO DE BUSQUEDA-->
           <form class="d-flex" role="search">
@@ -18,16 +18,16 @@ class specialHeader extends HTMLElement {
           </form>
 
           <div class="icon">
-            <!-- icono favorito (SVG) -->
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="iconFav" viewBox="0 0 16 16">
-              <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01z"/>
-            </svg>
-
-            <!-- icono perfil (SVG) -->
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="iconProfile" viewBox="0 0 16 16">
-              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-              <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-            </svg>
+            <!-- icono favorito (botón que abre offcanvas) -->
+            <button id="fav-button" class="navbar-toggler position-relative d-inline-block" type="button"
+                    data-bs-toggle="offcanvas" data-bs-target="#offcanvasFavorites"
+                    aria-controls="offcanvasFavorites" aria-label="Favoritos">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="iconFav" viewBox="0 0 16 16">
+                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01z"/>
+              </svg>
+              <span id="fav-badge"
+                    style="display:none; position:absolute; top:-6px; right:-6px; background:#dc3545; color:white; border-radius:50%; padding:2px 6px; font-size:12px;">0</span>
+            </button>
 
             <!-- Ícono de carrito (botón que abre offcanvas) -->
             <button id="cart-button" class="navbar-toggler position-relative" type="button"
@@ -57,11 +57,23 @@ class specialHeader extends HTMLElement {
           <div id="cart-items-list" class="mb-3"><!-- carrito.js renderiza aquí --></div>
           <div id="cart-subtotal" class="mt-2"></div>
           <div class="mt-3 d-flex gap-2">
-            <button id="cart-clear-btn" class="btn btn-outline-danger">Vaciar carrito</button>
-            <button id="cart-checkout-btn" class="btn btn-primary">Pagar pedido</button>
+            <button id="cart-clear-btn" class="btn btn-dark">Vaciar carrito</button>
+            <button id="cart-checkout-btn" class="btn btn-success">Pagar pedido</button>
           </div>
         </div>
+      </div>
 
+      <!-- OFFCANVAS (MENÚ FAVORITOS) -->
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasFavorites" aria-labelledby="offcanvasFavoritesLabel">
+        <div class="offcanvas-header">
+          <h3 id="offcanvasFavoritesLabel">Mis Favoritos</h3>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+        </div>
+
+        <div class="offcanvas-body">
+          <div id="fav-items-list" class="mb-3"><!-- favoritos.js renderiza aquí --></div>
+          <div id="fav-empty-msg" style="display:none; color: white;">No tienes productos favoritos aún.</div>
+        </div>
       </div>
 
       <!-- NAV horizontal -->
@@ -70,21 +82,28 @@ class specialHeader extends HTMLElement {
           <a href="index.html">Inicio</a>
           <a href="Anillos.html">Anillos</a>
           <a href="formularioContactanos.html">Contáctanos</a>
-          <a href="quiénesSomos.html">Quiénes Somos</a>
+          <a href="quienesSomos.html">Quiénes Somos</a>
         </section>
       </nav>
 
     </div>
     `;
 
-    /* --- MOVEMOS EL OFFCANVAS AL <body> PARA EVITAR PROBLEMAS DE STACKING --- */
+    /* --- MOVEMOS LOS OFFCANVAS AL <body> PARA EVITAR PROBLEMAS DE STACKING --- */
     // Ejecutar con setTimeout(,0) para asegurarnos de que el DOM interno exista.
     setTimeout(() => {
-      const off = this.querySelector('#offcanvasDarkNavbar');
-      if (off && off.parentElement !== document.body) {
-        document.body.appendChild(off);
-        // console.log('Offcanvas movido al body');
-      }
+      ['#offcanvasDarkNavbar', '#offcanvasFavorites'].forEach(id => {
+        const off = this.querySelector(id);
+        if (off && off.parentElement !== document.body) {
+          document.body.appendChild(off);
+        }
+      });
+
+      // Asegurar que los badges se actualicen al renderizar el header
+      if (window.actualizarBadgeFavoritos) window.actualizarBadgeFavoritos();
+      if (window.actualizarBadge) window.actualizarBadge();
+      if (window.renderCarritoOffcanvas) window.renderCarritoOffcanvas();
+      if (window.renderizarFavoritos) window.renderizarFavoritos();
     }, 0);
   }
 }
@@ -98,10 +117,9 @@ class specialfooter extends HTMLElement {
           <img src="logoBrillo.gif" alt="logoBrillo">
           <p>Siguenos en</p>
           <div class="redes">
-            <a href="#" class="facebook"><i class="fa-brands fa-facebook-f"></i></a>
-            <a href="#" class="whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
-            <a href="#" class="instagram"><i class="fa-brands fa-instagram"></i></a>
-            <a href="#" class="twitter"><i class="fa-brands fa-twitter"></i></a>
+            <a href="https://www.facebook.com/profile.php?id=61574158557384" class="facebook" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="https://wa.me/573203168616" class="whatsapp" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+            <a href="https://www.instagram.com/verdemontjoyas/" class="instagram" target="_blank"><i class="fa-brands fa-instagram"></i></a>
           </div>
         </div>
         <div class="column2">
@@ -113,7 +131,7 @@ class specialfooter extends HTMLElement {
         <div class="column3">
           <h3>Links</h3>
           <li><a href="formularioContactanos.html">Contactanos</a></li>
-          <li><a href="quiénesSomos.html">Quienes somos</a></li>
+          <li><a href="quienesSomos.html">Quienes somos</a></li>
         </div>
         <div class="column4">
           <p>Desarrollado con dedicación por</p>
